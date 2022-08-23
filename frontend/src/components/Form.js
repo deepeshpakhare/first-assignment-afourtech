@@ -4,7 +4,10 @@ import {useForm} from "react-hook-form"
 
 export default function Form() {
     const {register,handleSubmit} = useForm()
-    const onSubmit = async (data) => console.log(data)
+    const onSubmit = async (data) => {
+      console.log(data);
+      
+    }
 
   return (
     <section>

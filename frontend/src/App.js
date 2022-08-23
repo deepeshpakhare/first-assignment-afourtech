@@ -6,11 +6,12 @@ import Login from "./components/login";
 import Form from "./components/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import RegistrationForm from "./components/RegistrationForm";
 
 function App() {
     return (
       <div className="App">
-        <Form></Form>
+        <RegistrationForm></RegistrationForm>
       </div>
     );
 }
