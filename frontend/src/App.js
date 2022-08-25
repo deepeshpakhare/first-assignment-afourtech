@@ -1,18 +1,20 @@
 import React from "react";
 import "./App.css"
-import {Switch,Route,Link} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Login from "./components/login";
-import Form from "./components/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
 import RegistrationForm from "./components/RegistrationForm";
+import Login from "./Login";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 
 function App() {
     return (
-      <div className="App">
-        <RegistrationForm></RegistrationForm>
-      </div>
+      <Router>
+        <div className="App">
+          <Routes>
+              <Route path="/registration" element={<RegistrationForm/>}></Route>
+              <Route path="/login" element={<Login/>}></Route>
+          </Routes>
+        </div>
+      </Router>
     );
 }
 export default App;

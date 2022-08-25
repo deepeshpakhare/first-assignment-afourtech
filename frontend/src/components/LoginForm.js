@@ -1,7 +1,7 @@
-import React from 'react'
-import {Link} from "react-router-dom"
+import React from "react";
+import {Link} from "react-router-dom";
 
-class RegistrationForm extends React.Component {
+class LoginForm extends React.Component {
     constructor(props) {
       super(props);
       this.state = {    username: '',
@@ -59,17 +59,16 @@ class RegistrationForm extends React.Component {
             <div className='register'>
                 <div className='col-1'>
                     <h1><u>Expense Manager</u></h1>
-                <h2>Register</h2>
+                <h2>Login</h2>
                 <span>
-                        Register to enjoy the service
+                        Login
                 </span>
                 <form method= "POST" id="form" className='flex flex-col'  onSubmit={this.handleSubmit}>
                         <input type="text" value={this.state.username} onChange={this.handleChangeUsername} placeholder='username'/>
-                        <input type="text"  placeholder='password'/>
-                        <input type="text" value={this.state.password} onChange={this.handleChangePassword} placeholder='confirm password'/>
-                        <Link to="/login"><button className='btn' type='submit'>Register</button></Link>
+                        <input type="text" value={this.state.password} onChange={this.handleChangePassword} placeholder='password'/>
+                        <button className='btn' type='submit'>Login</button>
                 </form>
-                Already registered?<button className='btn'>Login</button>
+                    Not registered?<Link to="/registration"><button className='btn'>Register</button></Link>
                 </div>
             </div>
         </section>
@@ -77,4 +76,5 @@ class RegistrationForm extends React.Component {
     }
   }
 
-  export default RegistrationForm;
+
+export default LoginForm;

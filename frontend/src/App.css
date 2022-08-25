@@ -6,10 +6,9 @@
 }
 
 body{
-  background: #0f0c29;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  
+  background: #0f0c29;  
+  background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  
+  background: linear-gradient(to right, #24243e, #302b63, #0f0c29); 
 }
 
 .App {
@@ -49,7 +48,7 @@ body{
   outline: none;
 }
 
-#form > .btn{
+#form > Link, .btn{
   background-color: #003049;
   color: #e9ecef;
   font-size: 1em;
@@ -85,4 +84,4 @@ body{
   .register .col-2 img{
     display: initial;
   }
-}
+} 
