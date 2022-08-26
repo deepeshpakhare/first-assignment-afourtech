@@ -48,11 +48,21 @@ body{
   outline: none;
 }
 
-#form > Link, .btn{
+#form > .btn{
   background-color: #003049;
   color: #e9ecef;
   font-size: 1em;
   cursor: pointer;
+  width: 325px;
+}
+
+#login > .login_btn{
+  background-color: #003049;
+  color: #e9ecef;
+  font-size: 1em;
+  cursor: pointer;
+  width: 100px;
+  margin: 2em auto;
 }
 
 .flex{
