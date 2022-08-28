@@ -1,5 +1,5 @@
 import React from 'react'
-//import {useHistory,withRouter} from "react-router-dom"
+import {Link} from "react-router-dom"
 
 class RegistrationForm extends React.Component {
     
@@ -7,17 +7,23 @@ class RegistrationForm extends React.Component {
       super(props);
       this.state = {    username: '',
                         password: "",
+                        messageToDisplay: "",
                    };
   
       this.handleChangeUsername = this.handleChangeUsername.bind(this);
       this.handleChangePassword = this.handleChangePassword.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.showResponeMessage = this.showResponeMessage.bind(this);
       //this.navigateToLogin = this.navigateToLogin.bind(this);
       //his.forceState = this.forceState.bind(this);
     }
     
     handleChangeUsername(event) {
       this.setState({username: event.target.value});
+    }
+
+    showResponeMessage(message) {
+      this.setState({messageToDisplay: message});
     }
   
     handleChangePassword(event) {
@@ -33,7 +39,7 @@ class RegistrationForm extends React.Component {
     handleSubmit(event) {
       alert('A name was submitted: ' + this.state.password);
       
-      window.fetch(
+      var p1 = window.fetch(
         "http://localhost:8080/register", 
         {
             'method': 'POST',
@@ -46,20 +52,27 @@ class RegistrationForm extends React.Component {
                                     }
                                   )
         }
-        )
-        .then(
+        );
+        var p2 = p1.then(
             
-             (resp)=> {
-                console.log(resp);        
-             }
+             (resp)=> (resp.text())
              
-        )
-        .then(
-            (jsonData)=> {
-                console.log(jsonData);
+        );
+        p2.then(
+            (message)=> {
+              //console.log(jsonData);
+              this.showResponeMessage(message);
+              if (message == "done") {
                 window.location.href = "http://localhost:3000/login";
+              }   
             }
             //this.props.navigation.navigate("/login")    
+        )
+        .catch(
+          (err) =>{
+            console.error("Error: ");
+            console.error(err);
+          }
         )
       event.preventDefault(); 
     }
@@ -80,12 +93,13 @@ class RegistrationForm extends React.Component {
                         Register to enjoy the service
                 </span>
                 <form method= "POST" id="form" className='flex flex-col'>
+                        <label><h4>{this.state.messageToDisplay}</h4></label>
                         <input type="text" value={this.state.username} onChange={this.handleChangeUsername} placeholder='username'/>
-                        <input type="text"  placeholder='password'/>
-                        <input type="text" value={this.state.password} onChange={this.handleChangePassword} placeholder='confirm password'/>
+                        <input type="password"  placeholder='password'/>
+                        <input type="password" value={this.state.password} onChange={this.handleChangePassword} placeholder='confirm password'/>
                         <button className='btn' type='submit' onClick={this.handleSubmit}>Register</button>
                 </form>
-                Already registered?<span id="login"><button className='login_btn'>Login</button></span>
+                Already registered?<span id="login"><Link to="/login"><button className='login_btn'>Login</button></Link></span>
                 </div>
             </div>
         </section>

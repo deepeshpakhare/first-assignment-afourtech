@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import RegistrationForm from "./components/RegistrationForm";
 //import RegistartionFucntion from "./components/RegistartionFucntion";
 import LoginForm from "./components/LoginForm";
+//import ExpenseManager from "./components/ExpenseManager";
+
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 
 function App() {
