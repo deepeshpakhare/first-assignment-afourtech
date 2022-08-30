@@ -54,6 +54,9 @@ class LoginForm extends React.Component {
                 (status)=> {
                     console.log(status);
                     this.displayLoginMessage(status);
+                    if(status === "username password matched") {
+                       window.location.href = "http://localhost:3000/expensemanager";
+                    }
                 }
             )
       }
@@ -65,24 +68,58 @@ class LoginForm extends React.Component {
         this.setState({value: "Deepesh"});
         event.preventDefault();
       }*/
+     
+
 
     render() {
+      const buttonStyle = {width: 100};
       return (
         <section>
-            <div className='register'>
-                <div className='col-1'>
+            <div>
+                <div>
                     <h1><u>Expense Manager</u></h1>
                 <h2>Login</h2>
-                <span>
-                        Login
-                </span>
-                <form method= "POST" id="form" className='flex flex-col'>
-                        <label><h4>{this.state.loginMessageToDisplay}</h4></label>
-                        <input type="text" value={this.state.username} onChange={this.handleChangeUsername} placeholder='username' />
-                        <input type="password" value={this.state.password} onChange={this.handleChangePassword} placeholder='password' />
-                        <button className='btn' type='submit' onClick={this.handleSubmit}>Login</button>
+                <form method= "POST" id="form">
+                        <label><h6>{this.state.loginMessageToDisplay}</h6></label>
+                        <table>
+                          <tr>
+                            <td>
+                              Username: 
+                            </td>
+                            <td>
+                              <input type="text" value={this.state.username} onChange={this.handleChangeUsername} placeholder='username' />
+                            </td>
+                          </tr>
+                          <br />
+                          <tr>
+                            <td>
+                            Password:
+                            </td>
+                            <td>
+                               <input type="password" value={this.state.password} onChange={this.handleChangePassword} placeholder='password' />
+                            </td>
+                          </tr>
+                          <br />
+                          <tr>
+                            <td>
+
+                            </td>
+                            <td>
+                              <button  type='submit' onClick={this.handleSubmit}>Login</button> 
+                            </td>
+                          </tr>
+                          <br />
+                          <tr>
+                            <td>
+                                Not registered?
+                            </td>
+                            <td align="left">
+                                <Link to="/registration"><button>Register</button></Link>
+                            </td>
+                          </tr>
+                        </table>                     
                 </form>
-                    Not registered?<Link to="/registration"><button className='btn'>Register</button></Link>
+                    
                 </div>
             </div>
         </section>

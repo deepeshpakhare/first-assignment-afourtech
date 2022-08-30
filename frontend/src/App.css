@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 * > * {
     font-family: "Poppins", cursive;
@@ -12,7 +12,7 @@ body{
 }
 
 .App {
-  height: 100vh;
+  height: 200vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,8 +90,33 @@ body{
   display: none;
 }
 
+#table > tr,td .btn{
+  background-color: #003049;
+  color: #e9ecef;
+  font-size: 1em;
+  cursor: pointer;
+  width: 100px;
+}
+
+#table > tr,td .category{
+  border: 1px solid #e9ecef;
+  padding: .9em 1em;
+  width: 320px;
+}
 @media screen and (min-width: 860px)  {
   .register .col-2 img{
     display: initial;
   }
-} 
+} */
+
+.App {
+  height: 170vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+input {
+  width:350px;
+}

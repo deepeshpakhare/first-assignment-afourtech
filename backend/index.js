@@ -8,6 +8,11 @@ app.use(cors({credentials: true, origin: true}));
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
+//bcrypt
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+
 app.post("/register", (req, res) => {
   console.log(req.body);      // your JSON
   insertUserIntoDatabase(req.body,res);
@@ -75,20 +80,25 @@ const doesUserNamePasswordMatch = async (req_username,req_password) => {
   if (!doc) {
     return false;
   }else{
-    if(doc.password == req_password) {
+    const result = bcrypt.compare(req_password, doc.password).then(function(result) {
+      console.log("bcrypt result is "+result);
+    }); 
+    if(result) {
       return true;
     }else{
       return false;
-    }
+    }   
   }
 }
 
 const insertUser = (req_username,req_password) => {
   var newUserDoc = new user();
-  newUserDoc.username = req_username;
-  newUserDoc.password = req_password;
-  newUserDoc.save();
-  console.log("user added");
+  bcrypt.hash(req_password,saltRounds).then(function(hash) {
+    newUserDoc.username = req_username;
+    newUserDoc.password = hash;
+    newUserDoc.save();
+    console.log("user added");
+  }); 
 }
 
 app.get("/mypage", (req, res) => {
