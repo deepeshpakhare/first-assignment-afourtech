@@ -28,13 +28,13 @@ app.post("/login", (req,res) => {
 });
 
 const loginTheUser= async (req_username,req_password,responseObj) => {
-  let userExists = await doesUserNamePasswordMatch(req_username,req_password);
+  let usernamePasswordMatch = await doesUserNamePasswordMatch(req_username,req_password);
   let isUser = await doesUserExistAlready(req_username);
-  if(userExists) {
+  if(usernamePasswordMatch == true) {
+    console.log("username password matched");
     responseObj.send("username password matched");
-    console.log("User exists");
   }else{
-    if (isUser) {
+    if (isUser && (usernamePasswordMatch == false)) {
       responseObj.send("Incorrect password");
     }else{
       responseObj.send("User does not exist");
@@ -74,16 +74,19 @@ const doesUserExistAlready = async (req_username) => {
 }
 
 const doesUserNamePasswordMatch = async (req_username,req_password) => {
+  //var resultOfPasswordComparison = false;
   const doc = await user.findOne({username:req_username});
   //console.log(doc.username);
   //console.log(doc.password);
   if (!doc) {
     return false;
   }else{
-    const result = bcrypt.compare(req_password, doc.password).then(function(result) {
+    /*bcrypt.compare(req_password, doc.password).then(function(result) {
       console.log("bcrypt result is "+result);
-    }); 
-    if(result) {
+      resultOfPasswordComparison = result;
+    }); */
+    const resultOfPasswordComparison = await bcrypt.compare(req_password, doc.password);
+    if(resultOfPasswordComparison == true) {
       return true;
     }else{
       return false;

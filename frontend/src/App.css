@@ -110,7 +110,7 @@ body{
 } */
 
 .App {
-  height: 170vh;
+  height: 150vh;
   display: flex;
   justify-content: center;
   align-items: center;
