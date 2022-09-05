@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from "react-router-dom"
+import styles from "../css/RegistartionForm.module.css"
 
 class RegistrationForm extends React.Component {
     
@@ -126,11 +127,14 @@ class RegistrationForm extends React.Component {
       return (
         <section>
             <div>
-                <div>
-                    <h1><u>Expense Manager</u></h1>
-                <h2>Register</h2>
-                <br />
-                <form method= "POST" id="form" className='flex flex-col'>
+                <div >
+                  <br />
+                  <br />
+                 <center>
+                <form method= "POST" id="form">
+                        <h1><u>Expense Manager</u></h1>
+                        <h2>Register</h2>
+                        <br />
                         <label><h6>{this.state.messageToDisplay}</h6></label>
                         <table>
                           <tr>
@@ -165,13 +169,15 @@ class RegistrationForm extends React.Component {
 
                              </td>
                               <td>
-                                <button type='submit' onClick={this.handleSubmit}>Register</button>
+                                <button type='submit' className="${styles.btn}" onClick={this.handleSubmit}>Register</button>
                               </td>
                           </tr>
                         </table>
-                </form>
-                <br />
+                        <br />
                 Already registered?<span id="login"><Link to="/login"><button className='login_btn'>Login</button></Link></span>
+                </form>
+                </center>  
+                
                 </div>
             </div>
         </section>

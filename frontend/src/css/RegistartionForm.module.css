@@ -1,4 +1,4 @@
-/*@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 * > * {
     font-family: "Poppins", cursive;
@@ -6,9 +6,7 @@
 }
 
 body{
-  background: #0f0c29;  
-  background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  
-  background: linear-gradient(to right, #24243e, #302b63, #0f0c29); 
+  background: #a0dfe4;  
 }
 
 .App {
@@ -33,7 +31,7 @@ body{
   color: #adb5bd;
 }
 
-#form{
+.form{
   max-width: 320px;
   width: 100vw;
   margin: 2em auto;
@@ -48,7 +46,7 @@ body{
   outline: none;
 }
 
-#form > .btn{
+.btn{
   background-color: #003049;
   color: #e9ecef;
   font-size: 1em;
@@ -56,24 +54,16 @@ body{
   width: 325px;
 }
 
-#login > .login_btn{
-  background-color: #003049;
-  color: #e9ecef;
-  font-size: 1em;
-  cursor: pointer;
-  width: 100px;
-  margin: 2em auto;
-}
-
 .flex{
   display: flex;
   gap: 1em;
-}
-
-.flex-col{
   flex-direction: column;
 }
 
+/*.flex-col{
+  
+}
+*/
 .register .col-1{
   margin: auto;
   padding: 3em 0;
@@ -107,43 +97,4 @@ body{
   .register .col-2 img{
     display: initial;
   }
-} */
-
-/*.App {
-  height: 150vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: #f8f0a6;  
-}
-
-.registrationBox {
-  background: #a8ee79;
-  width: 200px;
-  height: 200px;
-}*/
-
-#form {
-  align-self: center;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: #f8f0a6; 
-  width: fit-content;
-}
-
-#login-form-table {
-  align-self: center;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: #e9eb77; 
-}
-
-#manage-expenses {
-  align-self: center;
-  margin-left: 120px;
-  font-size: larger;
-  font-weight: bold;
-}
+} 

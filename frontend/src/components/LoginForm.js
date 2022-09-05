@@ -78,12 +78,18 @@ class LoginForm extends React.Component {
       return (
         <section>
             <div>
-                <div>
-                    <h1><u>Expense Manager</u></h1>
-                <h2>Login</h2>
+                <div id="formdiv">
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                <center>   
                 <form method= "POST" id="form">
+                        <h1><u>Expense Manager</u></h1>
+                        <h2>Login</h2>
                         <label><h6>{this.state.loginMessageToDisplay}</h6></label>
-                        <table>
+                        <center><table id="login-form-table">
                           <tr>
                             <td>
                               Username: 
@@ -119,9 +125,10 @@ class LoginForm extends React.Component {
                                 <Link to="/registration"><button>Register</button></Link>
                             </td>
                           </tr>
-                        </table>                     
+                        </table>  
+                        </center>                   
                 </form>
-                    
+                </center> 
                 </div>
             </div>
         </section>
