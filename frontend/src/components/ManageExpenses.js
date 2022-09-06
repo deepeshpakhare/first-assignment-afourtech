@@ -9,9 +9,10 @@ export default class ManageExpenses extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      day : "",
+      day : new Date().getDate(),
       month : new Date().getMonth(),
       year: new Date().getFullYear(),
+      category: "",
     }
 
     //method binding
@@ -19,12 +20,46 @@ export default class ManageExpenses extends Component {
     this.setSelectedMonth = this.setSelectedMonth.bind(this);
     this.setToday = this.setToday.bind(this);
     this.setSelectedYear = this.setSelectedYear.bind(this);
+    this.handleChangeCategory = this.handleChangeCategory.bind(this);
+    this.handleCreateCategory = this.handleCreateCategory.bind(this);
+  }
+
+  handleCreateCategory(event){
+    window.fetch(
+      "http://localhost:8080/createCategory", 
+      {
+          'method': 'POST',
+          'mode': 'cors',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          'body': JSON.stringify( {   
+                                      'category':this.state.category,
+                                  }
+                                )
+      }
+      )
+      .then(
+          (resp)=> resp
+      )
+      .then(
+          (resp)=> {
+            alert(resp.text())
+          }
+      )
+event.preventDefault();
+}
+  
+
+  handleChangeCategory(event) {
+    this.setState({category: event.target.value});
   }
 
   setSelectedDay(event){
-    alert(event);
-    this.setSate({day: event.target.value});
-    alert("month is "+this.state.month)
+    //alert(event);
+    this.setState({day: event.target.value});
+    console.log(this.state.day);
+    //alert("month is "+this.state.month)
   }
 
   setSelectedMonth(event) {
@@ -33,7 +68,7 @@ export default class ManageExpenses extends Component {
   }
 
   setToday(event){
-    this.setState({month: new Date().getMonth()});
+    //this.setState({month: new Date().getMonth()});
   }
 
   setSelectedYear(event){
@@ -99,7 +134,7 @@ export default class ManageExpenses extends Component {
   return (
     <div  >
         <br /><br />
-          <form action="">
+          <form method="post">
             <table  id="manage-expenses">
               <tr>
                 <td><u>Step 1]: Create Categories</u></td>
@@ -107,20 +142,23 @@ export default class ManageExpenses extends Component {
               <br />
               <tr>
                 <td>
-                   <input type="text"  id="" name=""  placeholder='enter category'/>
+                   <input type="text"  id="category"  value={this.state.category} onChange={this.handleChangeCategory} placeholder='enter category'/>
                 </td>
                 <td>
-                  <button type="submit" >Create Category</button>
+                  <button type="submit" onClick={this.handleCreateCategory}>Create Category</button>{this.state.category}
                 </td>
-              </tr>
+                </tr>
+            </table>
+            <table id="manage-expenses">
               <br />
               <tr>
                 <td><u>Step 2]: Select date to add expenses </u></td>
               </tr>
+              <br />
               <tr>
-                <td align='right' > <label htmlFor="">{'    '} Day:</label>  </td>
-                <td align='right'>
-                  <select name="days" id="" style={{width:40}} defaultValue={new Date().getDate()}>          
+                <td align='right' > <label htmlFor="">{'    '} Day:</label></td>
+                <td>
+                  <select name="days" id="day"  defaultValue={new Date().getDate()} onClick={this.setSelectedDay}>          
                     {  
                       createDayArray(this.state.year,this.state.month).map((day) => {
                         return (<option  value={day}>{day}</option>);
@@ -128,7 +166,7 @@ export default class ManageExpenses extends Component {
                     }
                   </select>
                 </td>
-                <td align='right' >Month: </td>
+                <td >Month: </td>
                 <td>
                   <select name="months" id="month" defaultValue={new Date().getMonth()} onClick={this.setSelectedMonth}>            
                     {
@@ -139,7 +177,7 @@ export default class ManageExpenses extends Component {
                   </select>
                 </td>
                 
-                <td align='right' >Year: </td>
+                <td>Year: </td>
                   <td>
                     <select name="year" id="yearid" style={{width:80}} defaultValue={new Date().getFullYear()} onClick={this.setSelectedYear}>
                     {
@@ -150,8 +188,9 @@ export default class ManageExpenses extends Component {
                     </select>
                   </td>
               </tr>
+              <br />
               <tr>
-                <td><u>Step 3]: Add expenses for date : </u></td>
+                <td><u>Step 3]: Add expenses for date : {this.state.day}/{this.state.month}/{this.state.year} </u></td>
               </tr>
               
             </table>

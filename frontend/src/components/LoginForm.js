@@ -48,15 +48,15 @@ class LoginForm extends React.Component {
             }
             )
             .then(
-                (resp)=> resp.text()
+                (resp)=> resp
             )
             .then(
                 (status)=> {
                     console.log(status);
                     this.displayLoginMessage(status);
                     alert(status);
-                    if(status === "username password matched") {
-                        alert("inside if ");
+                    if(status.status == 202) {
+                        alert("Welcome");
                        window.location.href = "http://localhost:3000/expensemanager";
                     }
                 }
