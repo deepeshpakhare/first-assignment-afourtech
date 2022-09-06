@@ -11,14 +11,16 @@ export default class ManageExpenses extends Component {
     this.state = {
       day : "",
       month : new Date().getMonth(),
-      //year: new Date.getFullYear(),
+      year: new Date().getFullYear(),
     }
 
     //method binding
     this.setSelectedDay = this.setSelectedDay.bind(this);
     this.setSelectedMonth = this.setSelectedMonth.bind(this);
     this.setToday = this.setToday.bind(this);
+    this.setSelectedYear = this.setSelectedYear.bind(this);
   }
+
   setSelectedDay(event){
     alert(event);
     this.setSate({day: event.target.value});
@@ -32,6 +34,10 @@ export default class ManageExpenses extends Component {
 
   setToday(event){
     this.setState({month: new Date().getMonth()});
+  }
+
+  setSelectedYear(event){
+    this.setState({year: event.target.value})
   }
 
   render() {
@@ -81,6 +87,13 @@ export default class ManageExpenses extends Component {
       return array;
     }
 
+    const yearArray = () => {
+      var array = [];
+      for (var year = 1900; year <= new Date().getFullYear(); year++) {
+        array[year-1900] = year;
+      }
+      return array;
+    }
     
 
   return (
@@ -105,11 +118,11 @@ export default class ManageExpenses extends Component {
                 <td><u>Step 2]: Select date to add expenses </u></td>
               </tr>
               <tr>
-                <td align='right' >Day: </td>
-                <td>
+                <td align='right' > <label htmlFor="">{'    '} Day:</label>  </td>
+                <td align='right'>
                   <select name="days" id="" style={{width:40}} defaultValue={new Date().getDate()}>          
                     {  
-                      createDayArray(new Date().getFullYear(),this.state.month).map((day) => {
+                      createDayArray(this.state.year,this.state.month).map((day) => {
                         return (<option  value={day}>{day}</option>);
                       })
                     }
@@ -125,13 +138,18 @@ export default class ManageExpenses extends Component {
                     }
                   </select>
                 </td>
+                
+                <td align='right' >Year: </td>
+                  <td>
+                    <select name="year" id="yearid" style={{width:80}} defaultValue={new Date().getFullYear()} onClick={this.setSelectedYear}>
+                    {
+                        yearArray().map((year) => {
+                          return (<option value={year}>{year}</option>);
+                        })
+                      }
+                    </select>
+                  </td>
               </tr>
-              <td align='right' >Year: </td>
-                <td>
-                  <select name="year" id="yearid" style={{width:40}} defaultValue={new Date().getFullYear()}>;
-                    
-                  </select>
-                </td>
               <tr>
                 <td><u>Step 3]: Add expenses for date : </u></td>
               </tr>
