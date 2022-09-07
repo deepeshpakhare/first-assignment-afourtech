@@ -4,7 +4,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom"
 import ManageExpenses from './ManageExpenses';
 import Naviagtionbar from "./Navbar"
 import Summary from './Summary';
-
+import ManageExpenses1 from './ManageExpenses1';
 
 
 
@@ -19,7 +19,7 @@ class ExpenseManager extends React.Component {
                     <div>
                             <Switch>
                                 <Route path="/ManageExpenses">
-                                    <ManageExpenses />
+                                    <ManageExpenses1/>
                                 </Route>
                                 <Route path="/summary">
                                     <Summary />

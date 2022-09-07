@@ -147,3 +147,11 @@ body{
   font-size: larger;
   font-weight: bold;
 }
+
+#manageExpensesDiv {
+  height: 200vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

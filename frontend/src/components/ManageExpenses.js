@@ -9,19 +9,14 @@ export default class ManageExpenses extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      day : new Date().getDate(),
-      month : new Date().getMonth(),
-      year: new Date().getFullYear(),
+      date: new Date(),
       category: "",
     }
 
     //method binding
-    this.setSelectedDay = this.setSelectedDay.bind(this);
-    this.setSelectedMonth = this.setSelectedMonth.bind(this);
-    this.setToday = this.setToday.bind(this);
-    this.setSelectedYear = this.setSelectedYear.bind(this);
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
     this.handleCreateCategory = this.handleCreateCategory.bind(this);
+    //this.setDate = this.setDate.bind(this);
   }
 
   handleCreateCategory(event){
@@ -55,28 +50,10 @@ event.preventDefault();
     this.setState({category: event.target.value});
   }
 
-  setSelectedDay(event){
-    //alert(event);
-    this.setState({day: event.target.value});
-    console.log(this.state.day);
-    //alert("month is "+this.state.month)
-  }
-
-  setSelectedMonth(event) {
-    this.setState({month: event.target.value});
-    alert("month type is "+this.typeOf(this.state.month))
-  }
-
-  setToday(event){
-    //this.setState({month: new Date().getMonth()});
-  }
-
-  setSelectedYear(event){
-    this.setState({year: event.target.value})
-  }
+  setDate = date => this.setState({date:date})
 
   render() {
-    const monthArray = [
+    /*const monthArray = [
       31,28,31,30,31,30,31,31,30,31,30,31
     ];
 
@@ -129,7 +106,7 @@ event.preventDefault();
       }
       return array;
     }
-    
+    */
 
   return (
     <div  >
@@ -156,43 +133,14 @@ event.preventDefault();
               </tr>
               <br />
               <tr>
-                <td align='right' > <label htmlFor="">{'    '} Day:</label></td>
                 <td>
-                  <select name="days" id="day"  defaultValue={new Date().getDate()} onClick={this.setSelectedDay}>          
-                    {  
-                      createDayArray(this.state.year,this.state.month).map((day) => {
-                        return (<option  value={day}>{day}</option>);
-                      })
-                    }
-                  </select>
+                  <Calendar onChange={this.setDate} value={this.state.date}></Calendar>
                 </td>
-                <td >Month: </td>
-                <td>
-                  <select name="months" id="month" defaultValue={new Date().getMonth()} onClick={this.setSelectedMonth}>            
-                    {
-                      createMonthArray().map((month) => {
-                        return (<option value={month}>{month}</option>);
-                      })
-                    }
-                  </select>
-                </td>
-                
-                <td>Year: </td>
-                  <td>
-                    <select name="year" id="yearid" style={{width:80}} defaultValue={new Date().getFullYear()} onClick={this.setSelectedYear}>
-                    {
-                        yearArray().map((year) => {
-                          return (<option value={year}>{year}</option>);
-                        })
-                      }
-                    </select>
-                  </td>
               </tr>
               <br />
               <tr>
-                <td><u>Step 3]: Add expenses for date : {this.state.day}/{this.state.month}/{this.state.year} </u></td>
+                <td><u>Step 3]: Add expenses for date :{this.state.date} </u></td>
               </tr>
-              
             </table>
         </form>
       </div>
