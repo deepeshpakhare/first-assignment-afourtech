@@ -105,8 +105,9 @@ const endSession = async (session_id) => {
 
 app.post("/createCategory",async (req,res)=>{
     console.log(req.body);
-    var insertedCategory = await insertCategory(req.body.category_name,req.session.currentSession.user_id);
-    res.send({
+    try {
+      var insertedCategory = await insertCategory(req.body.category_name,req.session.currentSession.user_id);
+      res.send({
       "meta" : {
         "code":0,
         "message" :"ok"
@@ -114,7 +115,16 @@ app.post("/createCategory",async (req,res)=>{
       "data": {
         "category":insertedCategory
       }
-    });
+      });
+    } catch(ex) {
+      res.send({
+        "meta" : {
+          "code":1,
+          "message" :ex.toString()
+        },
+        });
+    }
+    
 });
 
 const loginTheUser= async (req,req_username,req_password) => {
@@ -201,11 +211,25 @@ const insertUser = async (req_username,req_password) => {
 }
 
 const insertCategory = async (categoryName,user_id) => {
+    if (doesCategoryExistAlready) {
+      throw "Category already exists"
+    }
     var newCategory = new category();
     newCategory.category_name = categoryName;
     newCategory.user_id = user_id;
     var createdCategory = await newCategory.save();
-    return createdCategory;
+    if (createdCategory != null) {
+      return createdCategory;
+    }
+    throw "Failed to create category";
+}
+
+const doesCategoryExistAlready = async (nameOfCategory,user_id) => {
+    var doc = await category.findOne({category_name:nameOfCategory,user_id:user_id});
+    if (doc != null) {
+      return true;
+    }
+    return false;
 }
 
 const PORT = 8080;
