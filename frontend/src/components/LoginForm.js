@@ -48,24 +48,19 @@ class LoginForm extends React.Component {
             }
             )
             .then(
-                (resp)=> resp
+                (resp)=> resp.json()
             )
             .then(
-                (status)=> {
-                    console.log(status);
-                    this.displayLoginMessage(status);
-                    alert(status);
-                    if(status.status == 202) {
-                        alert("Welcome");
-                       window.location.href = "http://localhost:3000/expensemanager";
-                    }
+                (responseJson)=> {
+                    console.log(responseJson);
+                    window.localStorage.setItem("session",JSON.stringify(responseJson.data.session));
                 }
             )
       }
       
       event.preventDefault();
     }
-  
+  //window.location.href = "http://localhost:3000/expensemanager";
     /*forceState(event) {
         this.setState({value: "Deepesh"});
         event.preventDefault();
