@@ -13,19 +13,26 @@ class ExpenseManager extends React.Component {
         return (   
             <>
                 <BrowserRouter>
-                    <div>
-                        <Naviagtionbar />
+                <div className='container'>
+                    <div className='row'>
+                        <div className='col'>
+                            <Naviagtionbar />
+                        </div>   
                     </div>
-                    <div>
+                    <div className='row'>
+                        <div className='col'>
                             <Switch>
                                 <Route path="/ManageExpenses">
-                                    <ManageExpenses1/>
+                                    <ManageExpenses/>
                                 </Route>
                                 <Route path="/summary">
                                     <Summary />
                                 </Route>
                             </Switch>
+                        </div>   
                     </div>
+                </div>
+                    
                 </BrowserRouter>
             </>
         );

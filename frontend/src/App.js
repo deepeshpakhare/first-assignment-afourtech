@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css"
 import "bootstrap/dist/css/bootstrap.min.css";
+import { } from "bootstrap";
 import RegistrationForm from "./components/RegistrationForm";
 //import RegistartionFucntion from "./components/RegistartionFucntion";
 import LoginForm from "./components/LoginForm";

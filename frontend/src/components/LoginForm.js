@@ -36,32 +36,47 @@ class LoginForm extends React.Component {
       if (this.state.username == "" || this.state.password == "") {
          this.displayLoginMessage("Please fill username and password both");
       } else {
-        window.fetch(
-            "http://localhost:8080/login", 
-            {
-                'method': 'POST',
-                'mode': 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                'body': JSON.stringify( {   'username':this.state.username,
-                                            "password":this.state.password,
-                                        }
-                                      )
-            }
-            )
-            .then(
-                (resp)=> resp.json()
-            )
-            .then(
-                (responseJson)=> {
-                    console.log(responseJson);
-                    //window.localStorage.setItem("session",JSON.stringify(responseJson.data.session));
-                }
-            )
+        this.callLogin();
       }
       
       event.preventDefault();
+    }
+     callLogin = async() => {
+      console.log("incallLogin")
+      await fetch(
+        "http://localhost:8080/login", 
+        {
+            'method': 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            'body': JSON.stringify( {   'username':this.state.username,
+                                        "password":this.state.password,
+                                    }
+                                  )
+        }
+        )
+        .then( 
+            (resp)=> {
+              if(resp){
+                console.log(resp.body)
+                 return resp.json()
+            }
+              else 
+              throw new Error("no resp")
+              }
+        )
+        .then(
+            (responseJson)=> {
+                console.log(responseJson);
+               // window.location.href = "http://localhost:3000/expensemanager";
+                window.localStorage.setItem("session",JSON.stringify(responseJson.data.session));
+            }
+        )
+        .catch((err)=>{
+          console.log(err);
+        }) 
+
     }
   //window.location.href = "http://localhost:3000/expensemanager";
     /*forceState(event) {
@@ -102,7 +117,7 @@ class LoginForm extends React.Component {
                       </div>
                       <div className="mb-2">
                       <Link to="/registration">
-                            <Button style={{width:"60%"}} variant="primary" size="lg" onClick={this.handleSubmit}>
+                            <Button style={{width:"60%"}} variant="primary" size="lg" >
                                 Register
                             </Button>
                         </Link>
