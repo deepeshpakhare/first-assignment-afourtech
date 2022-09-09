@@ -106,6 +106,9 @@ const endSession = async (session_id) => {
 app.post("/createCategory",async (req,res)=>{
     console.log(req.body);
     try {
+      if (req.session.currentSession == null) {
+          throw "Unauthorised access";
+      }
       var insertedCategory = await insertCategory(req.body.category_name,req.session.currentSession.user_id);
       res.send({
       "meta" : {
@@ -211,7 +214,7 @@ const insertUser = async (req_username,req_password) => {
 }
 
 const insertCategory = async (categoryName,user_id) => {
-    if (doesCategoryExistAlready) {
+    if (await doesCategoryExistAlready(categoryName,user_id)) {
       throw "Category already exists"
     }
     var newCategory = new category();

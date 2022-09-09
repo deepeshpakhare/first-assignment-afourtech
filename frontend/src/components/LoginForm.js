@@ -1,5 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import Button from "react-bootstrap/Button"
+import Form from "react-bootstrap/Form"
+import Stack from "react-bootstrap/Stack"
 
 class LoginForm extends React.Component {
     
@@ -53,7 +56,7 @@ class LoginForm extends React.Component {
             .then(
                 (responseJson)=> {
                     console.log(responseJson);
-                    window.localStorage.setItem("session",JSON.stringify(responseJson.data.session));
+                    //window.localStorage.setItem("session",JSON.stringify(responseJson.data.session));
                 }
             )
       }
@@ -70,6 +73,7 @@ class LoginForm extends React.Component {
 
     render() {
       const buttonStyle = {width: 100};
+      const textBoxStyle = {width:10};
       return (
         <section>
             <div>
@@ -79,8 +83,34 @@ class LoginForm extends React.Component {
                   <br />
                   <br />
                   <br />
-                <center>   
-                <form method= "POST" id="form">
+                <center> 
+                <Form>
+                    <Form.Group className="mb-3" size="sm" >
+                      <Form.Label>Username</Form.Label>
+                      <Form.Control style={{width:"25%"}} value={this.state.username} onChange={this.handleChangeUsername} placeholder="Enter username" />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control style={{width:"25%"}} type="password" value={this.state.password} onChange={this.handleChangePassword} placeholder="Password" />
+                    </Form.Group>
+                    <br />
+                    <Stack gap={2} className="col-md-5 mx-auto">
+                      <div className="mb-2">
+                            <Button style={{width:"60%"}} variant="primary" size="lg" onClick={this.handleSubmit}>
+                                Login
+                            </Button>
+                      </div>
+                      <div className="mb-2">
+                      <Link to="/registration">
+                            <Button style={{width:"60%"}} variant="primary" size="lg" onClick={this.handleSubmit}>
+                                Register
+                            </Button>
+                        </Link>
+                      </div>
+                    </Stack>
+                  </Form>
+
+                {/*<form method= "POST" id="form">
                         <h1><u>Expense Manager</u></h1>
                         <h2>Login</h2>
                         <label><h6>{this.state.loginMessageToDisplay}</h6></label>
@@ -107,9 +137,10 @@ class LoginForm extends React.Component {
                             <td>
 
                             </td>
-                            <td>
-                              <button  type='submit' onClick={this.handleSubmit}>Login</button> 
-                            </td>
+                            <td>*/}
+                              {/*<button  type='submit' >Login</button> */}
+                              
+                           { /*</td>
                           </tr>
                           <br />
                           <tr>
@@ -122,7 +153,7 @@ class LoginForm extends React.Component {
                           </tr>
                         </table>  
                         </center>                   
-                </form>
+                          </form>*/}
                 </center> 
                 </div>
             </div>
