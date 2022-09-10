@@ -1,49 +1,83 @@
 import React, { useState } from 'react'
 import Calendar from "react-calendar"
 import 'react-calendar/dist/Calendar.css';
-
+import ReactDatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function AddExpenseForm(props) {
-const [date,setDate] = useState(new Date());
-const [expense,setExpense] = useState(0);
-function changeDate(e) {
-    setDate(e);
-    alert(e.toDateString())
-}
-function handleChangeExpense(e) {
-    var val = parseInt(e.target.value);
-    if(val == NaN) {
-        alert("Please enter a valid amount");
-    } else{
-        setExpense(parseInt(e.target.value));
-    }
-}
-    console.log(props);
-  return (
-    <div className='container'>
-        <div className="row">
-            <div className="col">
-                Select Date:<Calendar maxDate={new Date()} onChange={changeDate} /> 
-            </div>
-        </div>
-        <div className="row">
-            <select className="form-select" aria-label="Default select example" style={{width:"66%"}}>
-                <option selected>Select a category</option>
-                {props.categories ? props.categories.map((category)=><option value={category._id} key={category.category_name}>{category.category_name}</option>) : null}
-            </select>
+    const [date, setDate] = useState(new Date());
+    const [expense, setExpense] = useState(0);
+    const [categoryId, setCategory] = useState(null);
 
-        </div>
-        <div className="row">
-            <div className="form-floating mb-3">
-                    <input className="form-control" type="text" id="expenseAmount"  onChange={handleChangeExpense} placeholder='enter category' />
+    const sessionInfo = JSON.parse(window.localStorage.getItem("session"));
+
+    function changeDate(e) {
+        setDate(e);
+        alert(e.toDateString())
+    }
+    function handleChangeExpense(e) {
+        var val = parseInt(e.target.value);
+        if (val == NaN) {
+            alert("Please enter a valid amount");
+        } else {
+            setExpense(parseInt(e.target.value));
+        }
+    }
+
+    function setSelectedCategory(e) {
+        setCategory(e.target.value);
+    }
+
+    function handleAddExpense(e) {
+        alert("Expense Added")
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Cookie", "connect.sid=s%3A68ad74f3-1a26-43ba-8bb1-449d70f49133.PTNrJWHaTgOOyT%2BE6CM5NLVbN6sipYgpJ6WYx7RrdTg");
+
+        var raw = JSON.stringify({
+            "session_id": sessionInfo._id,
+            "category_id": categoryId,
+            "amount": expense,
+            "date_of_expense": date,
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:8080/addExpense", requestOptions)
+            .then(response => response.json())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+
+    return (
+        
+        <div className='container-lg'>
+            <div className="row">
+                <div className="col">
+                    Select Date:<ReactDatePicker selected={date} maxDate={new Date()} onChange={changeDate}/>
+                </div>
+            </div>
+        
+                <div className="row mt-5">
+                    <select onChange={setSelectedCategory} className="form-select" aria-label="Default select example" style={{ height: '80%', width: 340 }} >
+                        <option selected>Select a category</option>
+                        {props.categories ? props.categories.map((category) => <option value={category._id} key={category.category_name}>{category.category_name}</option>) : null}
+                    </select>
+                </div>
+                <div className="row mt-5">
+                    <div className="form-floating mb-3">
+                        <input className="form-control" type="text" id="expenseAmount" onChange={handleChangeExpense} placeholder='enter category' style={{ height: '80%', width: 340 }} />
                         <label for="expenseAmount">Expense:</label>
-            </div>
+                    </div>
+                </div>
+                <div className="row mt-2">
+                    <button id="addExpense" type="button" class="btn btn-success" style={{ height: 70, width: 340 }} onClick={handleAddExpense}>Add Expense</button>
+                </div>
         </div>
-        <div className="row">    
-            <div className="col">
-                <button type="button" class="btn btn-success" style={{height:'80%',width:'40%'}}>Add Expense</button>
-            </div>
-        </div>
-    </div>
-  )
+    )
 }

@@ -50,10 +50,10 @@ export default function ManageExpenses(props) {
 
     <div className='container mt-3'>
       <div className="row">
-        <div className="col-6">
+        {/*<div className="col-6">
           <CreateCategoryForm></CreateCategoryForm>
-        </div>
-        <div className="col-6" style={{'border-left' : '3px solid red'}}>
+        </div>*/}
+        <div className="col-6">
           <AddExpenseForm categories={categories}></AddExpenseForm>
         </div>
       </div>

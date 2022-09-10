@@ -4,6 +4,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom"
 import ManageExpenses from './ManageExpenses';
 import Naviagtionbar from "./Navbar"
 import Summary from './Summary';
+import CreateCategoryForm from './CreateCategoryForm';
 import ManageExpenses1 from './ManageExpenses1';
 
 
@@ -22,7 +23,10 @@ class ExpenseManager extends React.Component {
                     <div className='row'>
                         <div className='col'>
                             <Switch>
-                                <Route path="/ManageExpenses">
+                                <Route path="/createcategories">
+                                    <CreateCategoryForm/>
+                                </Route>
+                                <Route path="/manageexpenses">
                                     <ManageExpenses/>
                                 </Route>
                                 <Route path="/summary">

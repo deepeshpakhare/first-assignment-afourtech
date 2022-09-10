@@ -64,7 +64,7 @@ export default function CreateCategoryForm() {
         showCategoryList();
     })
     return (
-        <div className='container'>
+        <div className='container mt-4'>
             <div className="row">
                 <div className="col">
                     <div className="form-floating mb-3">

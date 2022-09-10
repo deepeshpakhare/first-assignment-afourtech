@@ -9,6 +9,7 @@ export default class navbar extends Component {
     const tagval = "<h2>";
     const tagvalend = "</h2>";
     const menus = [
+      {to:"createcategories",val:"Create Categories"},
       {to:"manageexpenses",val:"Manage Expenses     "},
       {to:"summary",val:"Summary     "},
       {to:"monthlybudget",val:"Set Monthly Budget    "},
