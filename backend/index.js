@@ -36,7 +36,17 @@ const {
   getActiveSession,
 } = require("./auth")
 
-const {insertCategory, getUserCategories} = require("./categories")
+const {
+  getAll,
+  getbyUser,
+  deleteExpense,
+  updateExpense,
+  insertExpense
+}
+= require("./expenses")
+
+const {insertCategory, getUserCategories, getCategory} = require("./categories");
+const { createSuccessResponseData } = require("./responseData");
 
 app.post("/register", (req, res) => {
   console.log(req.body);      // your JSON
@@ -94,13 +104,11 @@ app.post("/logout", async (req,res) => {
 app.post("/createCategory",async (req,res)=>{
     console.log(req.body);
     try {
-      // if (req.session.currentSession == null) {
-      //     throw "Unauthorised access";
-      // }
-      if (! await isActiveSession(req.body.session_id)) {
+      var activeSession =  await getActiveSession(req.body.session_id);
+      if (activeSession == null) {
         throw "Unauthorised access";
     }
-      var insertedCategory = await insertCategory(req.body.category_name,req.session.currentSession.user_id);
+      var insertedCategory = await insertCategory(req.body.category_name,activeSession.user_id);
       res.send(responseData.createSuccessResponseData({
         "category":insertedCategory
       }
@@ -140,6 +148,55 @@ console.log(req.body);
   }
 })
 
+app.post("/addExpense",async(req,res)=>{
+  try {
+    var activeSession =  await getActiveSession(req.body.session_id);
+    if (activeSession == null) {
+      throw "Unauthorised access";
+    }
+    var existingCategory = await getCategory(req.body.category_id);
+    if (existingCategory == null) {
+      throw "no such category";
+    }
+    var insertedExpense = await insertExpense({
+      user_id:activeSession.user_id,
+      category_id:req.body.category_id,
+      amount: req.body.amount,
+      date_of_expense:req.body.date_of_expense,
+    })
+    res.send(createSuccessResponseData({
+      "expense":insertedExpense
+    }))
+ }catch(ex) {
+  res.send({
+    "meta" : {
+      "code":1,
+      "message" :ex.toString()
+    },
+    });
+  }
+})
+
+
+app.post("/myExpenses",async(req,res)=>{
+  try {
+    var activeSession =  await getActiveSession(req.body.session_id);
+    if (activeSession == null) {
+      throw "Unauthorised access";
+    }
+    var expenses  = await getbyUser(activeSession.user_id);
+    res.send(createSuccessResponseData({
+      "expenses":expenses
+    }))
+ }catch(ex) {
+  res.send({
+    "meta" : {
+      "code":1,
+      "message" :ex.toString()
+    },
+    });
+  }
+})
 
 
 const connectToDatabase = () => {

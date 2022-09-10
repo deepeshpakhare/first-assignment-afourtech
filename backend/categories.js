@@ -28,7 +28,13 @@ const getUserCategories = async (user_id) => {
     return doc;
 }
 
+const getCategory = async (category_id) => {
+  var doc = await category.findById(category_id);
+  return doc;
+}
+
 module.exports = {
     "insertCategory":insertCategory,
-    "getUserCategories":getUserCategories
+    "getUserCategories":getUserCategories,
+    "getCategory":getCategory
 }

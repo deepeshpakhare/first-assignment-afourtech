@@ -69,8 +69,9 @@ class LoginForm extends React.Component {
         .then(
             (responseJson)=> {
                 console.log(responseJson);
-               // window.location.href = "http://localhost:3000/expensemanager";
+               // 
                 window.localStorage.setItem("session",JSON.stringify(responseJson.data.session));
+                window.location.href = "http://localhost:3000/expensemanager";
             }
         )
         .catch((err)=>{

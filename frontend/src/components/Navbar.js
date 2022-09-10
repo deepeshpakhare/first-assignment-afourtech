@@ -9,16 +9,16 @@ export default class navbar extends Component {
     const tagval = "<h2>";
     const tagvalend = "</h2>";
     const menus = [
-      {to:"manageexpenses",val:"Manage EXpenses"},
-      {to:"summary",val:"Summary"},
-      {to:"monthlybudget",val:"Set Monthly Budget"},
-      {to:"notiications", val:"Notofications"}
+      {to:"manageexpenses",val:"Manage Expenses     "},
+      {to:"summary",val:"Summary     "},
+      {to:"monthlybudget",val:"Set Monthly Budget    "},
+      {to:"notiications", val:"Notifications     "}
     ]
     return (
       <div>
         <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand></Navbar.Brand>
+          <Navbar.Brand >| Expense Manager |</Navbar.Brand>
           <Nav className="me-auto">
             {menus.map((menu)=>{return (<Nav.Link ><NavLink to={menu.to}><h5>{menu.val}</h5></NavLink></Nav.Link>)
             })}

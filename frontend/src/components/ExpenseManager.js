@@ -13,7 +13,7 @@ class ExpenseManager extends React.Component {
         return (   
             <>
                 <BrowserRouter>
-                <div className='container'>
+                <div className='container-fluid'>
                     <div className='row'>
                         <div className='col'>
                             <Naviagtionbar />
