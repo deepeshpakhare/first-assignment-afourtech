@@ -1,4 +1,5 @@
-const expense = require("./models/expense")
+const expense = require("./models/expense");
+const user = require("./models/user");
 
 const insertExpense = async (expenseData) => {
     var newExpense = new expense();
@@ -28,10 +29,17 @@ const getbyUser = async (user_id) => {
     return doc;
 }
 
+const getByDateRange = async (user_id,startDate,endDate) => {
+    //var doc = await expense.find({user_id:user_id});
+    var docsByDateRange = await expense.find({user_id:user_id,date_of_expense: { $gte: startDate, $lte: endDate } })
+   return docsByDateRange;
+}
+
 module.exports = {
     "insertExpense": insertExpense,
     "getAll":getAll,
     "getbyUser":getbyUser,
      "updateExpense":updateExpense,
      "deleteExpense":deleteExpense,
+     "getByDateRange": getByDateRange,
 }

@@ -41,7 +41,8 @@ const {
   getbyUser,
   deleteExpense,
   updateExpense,
-  insertExpense
+  insertExpense,
+  getByDateRange,
 }
 = require("./expenses")
 
@@ -195,6 +196,26 @@ app.post("/myExpenses",async(req,res)=>{
       "message" :ex.toString()
     },
     });
+  }
+})
+
+app.post("/getSummary",async(req,res)=>{
+  try {
+    var activeSession =  await getActiveSession(req.body.session_id);
+    if (activeSession == null) {
+      throw "Unauthorised access";
+    }
+    var expensesInTheDateRange = await getByDateRange(activeSession.user_id,req.body.start_date,req.body.end_date);
+    res.send(createSuccessResponseData({
+      "expensesInDateRange" : expensesInTheDateRange
+    }))
+  }catch(ex){
+    res.send({
+      "meta" : {
+        "code":1,
+        "message" :ex.toString()
+      },
+      });
   }
 })
 
