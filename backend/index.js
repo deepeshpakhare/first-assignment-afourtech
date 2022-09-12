@@ -49,10 +49,10 @@ const {
 const {insertCategory, getUserCategories, getCategory} = require("./categories");
 const { createSuccessResponseData } = require("./responseData");
 
-app.post("/register", (req, res) => {
+app.post("/register", async (req, res) => {
   console.log(req.body);      // your JSON
   try{
-   var inserted =  insertUserIntoDatabase(req.body);
+   var inserted = await insertUserIntoDatabase(req.body);
     res.send(responseData.createSuccessResponseData({
         "user":inserted
       })
@@ -220,10 +220,7 @@ app.post("/getSummary",async(req,res)=>{
 })
 
 
-const connectToDatabase = () => {
-  mongoose.connect("mongodb://localhost/my_database",
-  {useNewUrlParser:true});
-}
+
 
 
 

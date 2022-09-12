@@ -5,7 +5,10 @@ const session = require("./models/session")
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-
+const connectToDatabase = () => {
+    mongoose.connect("mongodb://localhost/my_database",
+    {useNewUrlParser:true});
+  }
 
 const insertUserIntoDatabase = async (user) => {
     const username = user.username;

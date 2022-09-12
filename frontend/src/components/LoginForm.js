@@ -100,7 +100,31 @@ class LoginForm extends React.Component {
                   <br />
                   <br />
                 <center> 
-                <Form>
+                  <h2>Please log in...</h2>
+                  <br />
+                <div className="form-floating mb-3">
+                  <input style={{width:"25%"}} value={this.state.username} onChange={this.handleChangeUsername} type="email" className="form-control" id="username"/>
+                  <label for="username">Enter Username</label>
+                </div>
+                <div className="form-floating">
+                  <input style={{width:"25%"}} type="password" value={this.state.password} onChange={this.handleChangePassword} className="form-control" id="floatingPassword"/>
+                  <label for="floatingPassword">Enter Password</label>
+                </div>
+                <br />
+                <Stack gap={2} className="col-md-5 mx-auto">
+                      <div className="mb-2">
+                            <Button style={{width:"60%"}} variant="primary" size="lg" onClick={this.handleSubmit}>
+                                Login
+                            </Button>
+                      </div>
+                      <div className="mb-2">
+                        Not registered ?
+                      <Link to="/registration">     
+                          Register
+                        </Link>
+                      </div>
+                    </Stack>
+                {/* <Form>
                     <Form.Group className="mb-3" size="sm" >
                       <Form.Label>Username</Form.Label>
                       <Form.Control style={{width:"25%"}} value={this.state.username} onChange={this.handleChangeUsername} placeholder="Enter username" />
@@ -124,7 +148,7 @@ class LoginForm extends React.Component {
                         </Link>
                       </div>
                     </Stack>
-                  </Form>
+      </Form>*/}
 
                 {/*<form method= "POST" id="form">
                         <h1><u>Expense Manager</u></h1>

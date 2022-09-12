@@ -24,6 +24,7 @@ export default class navbar extends Component {
             {menus.map((menu)=>{return (<Nav.Link ><NavLink to={menu.to}><h5>{menu.val}</h5></NavLink></Nav.Link>)
             })}
           </Nav>
+      
         </Container>
       </Navbar>              
       </div>

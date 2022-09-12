@@ -1,6 +1,9 @@
 import React from 'react'
 import {Link} from "react-router-dom"
 import styles from "../css/RegistartionForm.module.css"
+import Button from "react-bootstrap/Button"
+import Form from "react-bootstrap/Form"
+import Stack from "react-bootstrap/Stack"
 
 class RegistrationForm extends React.Component {
     
@@ -99,10 +102,11 @@ class RegistrationForm extends React.Component {
             
        );
        p2.then(
-           (message)=> {
+           (messageJson)=> {
              //console.log(jsonData);
-             this.showResponseMessage(message);
-             if (message == "done") {
+             let parsedJson = JSON.parse(messageJson);
+             this.showResponseMessage(parsedJson.meta.message);
+             if (parsedJson.meta.code == 0) {
                window.location.href = "http://localhost:3000/login";
              }   
            }
@@ -131,7 +135,39 @@ class RegistrationForm extends React.Component {
                   <br />
                   <br />
                  <center>
-                <form method= "POST" id="form">
+                 <form method= "POST">
+                    <h1><u>Expense Manager</u></h1><br />
+                            <h2>Register</h2>
+                            <br />
+                            <label><h6>{this.state.messageToDisplay}</h6></label>
+                    <div className="form-floating mb-3">
+                      <input value={this.state.username} onChange={this.handleChangeUsername} style={{width:"25%"}}type="email" className="form-control" id="username" placeholder="name@example.com"/>
+                      <label for="username">Enter username</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input  value={this.state.temppassword} onChange={this.handleChangeTempPassword} style={{width:"25%"}} type="password" className="form-control" id="floatingPassword" placeholder="Password"/>
+                      <label for="floatingPassword">Enter Password</label>
+                    </div>
+                    <div className="form-floating">
+                      <input  value={this.state.password} onChange={this.handleChangePassword} style={{width:"25%"}} type="password" className="form-control" id="cnf-Password" placeholder="Password"/>
+                      <label for="cnf-Password">Confirm Password</label>
+                    </div>
+                    <br />
+                    <Stack gap={2} className="col-md-5 mx-auto">
+                          <div className="mb-2">
+                                <Button style={{width:"60%"}} variant="primary" size="lg" type="submit" onClick={this.handleSubmit}>
+                                    Register
+                                </Button>
+                          </div>
+                          <div className="mb-2">
+                            Already registered ?
+                          <Link to="/login">     
+                              Login
+                            </Link>
+                          </div>
+                        </Stack>
+                </form>
+                {/*<form method= "POST" id="form">
                         <h1><u>Expense Manager</u></h1>
                         <h2>Register</h2>
                         <br />
@@ -175,9 +211,8 @@ class RegistrationForm extends React.Component {
                         </table>
                         <br />
                 Already registered?<span id="login"><Link to="/login"><button className='login_btn'>Login</button></Link></span>
-                </form>
+      </form>*/}
                 </center>  
-                
                 </div>
             </div>
         </section>

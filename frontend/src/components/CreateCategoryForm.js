@@ -3,39 +3,47 @@ import { useState } from 'react';
 import CategoryList from './CategoryList';
 
 export default function CreateCategoryForm() {
-    const [category, setCategory] = useState("");
+    const [category, setCategory] = useState(null);
     const [categoryList, setCategoryList] = useState(null);
 
     const sessionInfo = JSON.parse(window.localStorage.getItem("session"));
 
     function handleChangeCategory(e) {
-        setCategory(e.target.value);
+        if(e.target.value != null) {
+            setCategory(e.target.value);
+        }
     }
 
     function handleAddCategory(e) {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        var raw = JSON.stringify({
-            'session_id': sessionInfo._id,
-            "category_name": category
-        });
-
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        fetch("http://localhost:8080/createCategory", requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                console.log(result); 
-                setCategoryList(null);
-                showCategoryList()
-            })
-            .catch(error => console.log('error', error));
+        if (category == null || category == "") {
+            alert("Category name can not be blank");
+        }else{
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+    
+            var raw = JSON.stringify({
+                'session_id': sessionInfo._id,
+                "category_name": category
+            });
+    
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+    
+            fetch("http://localhost:8080/createCategory", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result); 
+                    setCategoryList(null);
+                    showCategoryList()
+                })
+                .catch(error => console.log('error', error));
+                setCategory("");
+        }
+       
     }
 
     const showCategoryList = function () {
