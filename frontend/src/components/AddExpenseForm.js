@@ -63,7 +63,7 @@ export default function AddExpenseForm(props) {
                 </div>
             </div>
         
-                <div className="row mt-5">
+                <div className="row mt-5 ml-3">
                     <select onChange={setSelectedCategory} className="form-select" aria-label="Default select example" style={{ height: '80%', width: 340 }} >
                         <option selected>Select a category</option>
                         {props.categories ? props.categories.map((category) => <option value={category._id} key={category.category_name}>{category.category_name}</option>) : null}

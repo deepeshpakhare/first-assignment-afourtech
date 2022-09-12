@@ -9,6 +9,7 @@ import ExpenseManager from "./components/ExpenseManager";
 import CreateCategoryForm from "./components/CreateCategoryForm";
 
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
+const isUserLoggedInContext = React.createContext(false);
 
 function App() {
     return (

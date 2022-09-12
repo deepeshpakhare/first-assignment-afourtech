@@ -69,7 +69,7 @@ class LoginForm extends React.Component {
         .then(
             (responseJson)=> {
                 console.log(responseJson);
-               // 
+               //
                 window.localStorage.setItem("session",JSON.stringify(responseJson.data.session));
                 window.location.href = "http://localhost:3000/expensemanager";
             }
@@ -100,7 +100,7 @@ class LoginForm extends React.Component {
                   <br />
                   <br />
                 <center> 
-                  <h2>Please log in...</h2>
+                  <h2>Please log in</h2>
                   <br />
                 <div className="form-floating mb-3">
                   <input style={{width:"25%"}} value={this.state.username} onChange={this.handleChangeUsername} type="email" className="form-control" id="username"/>

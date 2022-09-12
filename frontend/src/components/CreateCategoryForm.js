@@ -5,12 +5,15 @@ import CategoryList from './CategoryList';
 export default function CreateCategoryForm() {
     const [category, setCategory] = useState(null);
     const [categoryList, setCategoryList] = useState(null);
+    const serialNumberArray = [];
+    var count = 0;
 
     const sessionInfo = JSON.parse(window.localStorage.getItem("session"));
 
     function handleChangeCategory(e) {
         if(e.target.value != null) {
             setCategory(e.target.value);
+            serialNumberArray.push(count++);
         }
     }
 
@@ -86,7 +89,7 @@ export default function CreateCategoryForm() {
             </div>
             <div className="row">
                 <div className="col">
-                    <CategoryList categories={categoryList}></CategoryList>
+                    <CategoryList categories={categoryList} counts={serialNumberArray}></CategoryList>
                 </div>
             </div>
         </div>

@@ -13,7 +13,7 @@ export default class navbar extends Component {
       {to:"manageexpenses",val:"Manage Expenses     "},
       {to:"summary",val:"Summary     "},
       {to:"monthlybudget",val:"Set Monthly Budget    "},
-      {to:"notiications", val:"Notifications     "}
+      
     ]
     return (
       <div>
@@ -21,8 +21,13 @@ export default class navbar extends Component {
         <Container>
           <Navbar.Brand >| Expense Manager |</Navbar.Brand>
           <Nav className="me-auto">
-            {menus.map((menu)=>{return (<Nav.Link ><NavLink to={menu.to}><h5>{menu.val}</h5></NavLink></Nav.Link>)
+            {menus.map((menu)=>{return (<Nav.Link ><NavLink to={menu.to}><h5><button type="button" class="btn btn-primary">{menu.val}</button></h5></NavLink></Nav.Link>)
             })}
+            <Nav.Link ><NavLink to="createcategories"><h5>
+              <button type="button" class="btn btn-primary">
+                Notifications <span class="badge text-bg-secondary">4</span>
+              </button></h5>
+            </NavLink></Nav.Link>
           </Nav>
       
         </Container>

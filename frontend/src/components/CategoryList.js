@@ -1,17 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function CategoryList(props) {
-
+    var count = 1;
     const CategoryItem = function (props){
-        return <option>{props.category.category_name}</option>
+       
+        return <tr  className='table table-dark table-hover'><td>{props.count}</td><td>{props.category.category_name}</td></tr>
     }
-
-  return (<select style={{width:"70%"}} class="form-select" size="10" aria-label="size 3 select example">
-    <option selected>(List of your categories)</option>
+  return (<table class="table table-dark table-hover" style={{width:790}}>
+    <tbody>
+    <tr  className='table table-dark table-hover'>
+      <td>
+        Sr. No.
+      </td>
+      <td>
+        Category Name
+      </td>
+    </tr>
     {props.categories ? props.categories.map(
-        (category)  => <CategoryItem category={category} />
+        (category)  => <CategoryItem category={category} count={count++}/>
     ) : null}
-    </select>
+       
+    </tbody>
+    </table>
   )
 }
 //<option value={category._id} key={category.category_name}>{category.category_name}</option>
