@@ -26,9 +26,14 @@ export default class navbar extends Component {
           <Nav className="me-auto">
             {menus.map((menu)=>{return (<Nav.Link ><NavLink to={menu.to}><h5><button type="button" class="btn btn-success">{menu.val}</button></h5></NavLink></Nav.Link>)
             })}
-            <Nav.Link ><NavLink to="createcategories"><h5>
+            <Nav.Link ><NavLink to="notifications"><h5>
               <button type="button" class="btn btn-success">
                 Notifications <span class="badge text-bg-secondary">4</span>
+              </button></h5>
+            </NavLink></Nav.Link>
+            <Nav.Link ><NavLink to="logout"><h5>
+              <button type="button" class="btn btn-danger" style={{height:60}}>
+                Logout
               </button></h5>
             </NavLink></Nav.Link>
           </Nav>
