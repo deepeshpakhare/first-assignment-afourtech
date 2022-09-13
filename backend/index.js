@@ -73,13 +73,14 @@ app.post("/login", async (req,res) => {
   const userSession = await loginTheUser(req,req.body.username,req.body.password);
   if (userSession != null) {
     req.session.currentSession = userSession;
-    req.session.someField = "somevalue";
+    //req.session.someField = "somevalue";
     // req.session.save();
     // req.session.currentSession = "ABC";
     // req.session.reload(()=>{});
     console.log("req.session",req.session);
     res.send(responseData.createSuccessResponseData({
-        "session":userSession
+        "session":userSession,
+        "username":req.body.username
       }
     ));
   }else{

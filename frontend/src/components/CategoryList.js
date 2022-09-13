@@ -5,11 +5,11 @@ export default function CategoryList(props) {
     var count = 1;
     const CategoryItem = function (props){
        
-        return <tr  className='table table-dark table-hover'><td>{props.count}</td><td>{props.category.category_name}</td></tr>
+        return <tr  className='table table-success table-striped'><td>{props.count}</td><td>{props.category.category_name}</td></tr>
     }
-  return (<table class="table table-dark table-hover" style={{width:790}}>
+  return (<table class="table table-success table-striped" style={{width:790}}>
     <tbody>
-    <tr  className='table table-dark table-hover'>
+    <tr  className='table table-success table-striped'>
       <td>
         Sr. No.
       </td>

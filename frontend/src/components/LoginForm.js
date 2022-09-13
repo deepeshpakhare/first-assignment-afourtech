@@ -71,6 +71,7 @@ class LoginForm extends React.Component {
                 console.log(responseJson);
                //
                 window.localStorage.setItem("session",JSON.stringify(responseJson.data.session));
+                window.localStorage.setItem("username",JSON.stringify(responseJson.data.username));
                 window.location.href = "http://localhost:3000/expensemanager";
             }
         )

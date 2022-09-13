@@ -59,24 +59,24 @@ export default function AddExpenseForm(props) {
         <div className='container-lg'>
             <div className="row">
                 <div className="col">
-                    Select Date:<ReactDatePicker selected={date} maxDate={new Date()} onChange={changeDate}/>
+                    Select Date:<ReactDatePicker className="form-select" selected={date} maxDate={new Date()} style={{ height: '80%', width: 40 }} onChange={changeDate}/>
                 </div>
             </div>
         
                 <div className="row mt-5 ml-3">
-                    <select onChange={setSelectedCategory} className="form-select" aria-label="Default select example" style={{ height: '80%', width: 340 }} >
-                        <option selected>Select a category</option>
+                    <select onChange={setSelectedCategory} className="form-select" aria-label="Default select example" style={{ height: '80%', width: 530 }} >
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span><option selected>Select a category</option>
                         {props.categories ? props.categories.map((category) => <option value={category._id} key={category.category_name}>{category.category_name}</option>) : null}
                     </select>
                 </div>
                 <div className="row mt-5">
                     <div className="form-floating mb-3">
-                        <input className="form-control" type="text" id="expenseAmount" onChange={handleChangeExpense} placeholder='enter category' style={{ height: '80%', width: 340 }} />
+                        <input className="form-control" type="text" id="expenseAmount" onChange={handleChangeExpense} placeholder='enter category' style={{ height: '80%', width: 530 }} />
                         <label for="expenseAmount">Expense:</label>
                     </div>
                 </div>
                 <div className="row mt-2">
-                    <button id="addExpense" type="button" class="btn btn-success" style={{ height: 70, width: 340 }} onClick={handleAddExpense}>Add Expense</button>
+                    <button id="addExpense" type="button" class="btn btn-success" style={{ height: 70, width: 530 }} onClick={handleAddExpense}>Add Expense</button>
                 </div>
         </div>
     )
