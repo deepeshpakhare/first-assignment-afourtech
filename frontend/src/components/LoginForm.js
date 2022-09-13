@@ -101,7 +101,7 @@ class LoginForm extends React.Component {
                   <br />
                   <br />
                 <center> 
-                  <h2>Please log in</h2>
+                  <h2>Log in</h2>
                   <br />
                 <div className="form-floating mb-3">
                   <input style={{width:"25%"}} value={this.state.username} onChange={this.handleChangeUsername} type="email" className="form-control" id="username"/>

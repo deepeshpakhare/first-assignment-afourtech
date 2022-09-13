@@ -136,8 +136,8 @@ class RegistrationForm extends React.Component {
                   <br />
                  <center>
                  <form method= "POST">
-                    <h1><u>Expense Manager</u></h1><br />
-                            <h2>Register</h2>
+                 <h1><span class="badge rounded-pill text-bg-danger">Expense Manager</span></h1><br />
+                            <br /><br /><h4>Register</h4>
                             <br />
                             <label><h6>{this.state.messageToDisplay}</h6></label>
                     <div className="form-floating mb-3">
