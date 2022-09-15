@@ -71,6 +71,10 @@ export default function WeeklyExpense() {
 
     const handleGetExpenses = () => {
 
+        var new_start_date = new Date();
+        new_start_date.setDate(startDate.getDate()-1);
+        console.log(new_start_date);
+
         //console.log(month, " ", year)
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -105,7 +109,7 @@ export default function WeeklyExpense() {
 
         var raw = JSON.stringify({
             "session_id": sessionInfo._id,
-            "start_date": startDate,
+            "start_date": new_start_date,
             "end_date": endDate,
             //"start_date": "1-September-2022",
             // "end_date": "31-September-2022"
