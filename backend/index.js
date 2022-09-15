@@ -206,7 +206,10 @@ app.post("/getSummary",async(req,res)=>{
     if (activeSession == null) {
       throw "Unauthorised access";
     }
+    console.log(req.body.start_date);
+    console.log(req.body.end_date);
     var expensesInTheDateRange = await getByDateRange(activeSession.user_id,req.body.start_date,req.body.end_date);
+    
     res.send(createSuccessResponseData({
       "expensesInDateRange" : expensesInTheDateRange
     }))
@@ -219,11 +222,6 @@ app.post("/getSummary",async(req,res)=>{
       });
   }
 })
-
-
-
-
-
 
 
 const PORT = 8080;

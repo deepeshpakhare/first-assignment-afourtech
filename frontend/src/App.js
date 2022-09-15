@@ -22,7 +22,9 @@ function App() {
               <Route path="/expensemanager" component={ExpenseManager}></Route>
               <Route path="/manageexpenses" component={ExpenseManager}></Route>
               <Route path="/createcategories" component={ExpenseManager}></Route>
-              <Route path="/summary" component={ExpenseManager}></Route>
+              <Route path="/monthlybudget" component={ExpenseManager}></Route>
+              <Route path="/monthlyexpense" component={ExpenseManager}></Route>
+              <Route path="/weeklyexpense" component={ExpenseManager}></Route>
           </Switch>
         </div>
       </Router>

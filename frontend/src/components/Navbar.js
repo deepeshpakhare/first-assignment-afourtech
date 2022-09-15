@@ -10,10 +10,11 @@ export default class navbar extends Component {
     const username = window.localStorage.getItem("username");
     const menus = [
       {to:"createcategories",val:"Create Categories"},
+      {to:"monthlybudget",val:"Monthly Budget"},
       {to:"manageexpenses",val:"Manage Expenses"},
-      {to:"summary",val:"Expense Summary"},
-      {to:"monthlybudget",val:"Set Monthly Budge"},
-      
+      {to:"monthlyexpense",val:"Monthly Expense"},
+      {to:"weeklyexpense",val:"Weekly Expense"},
+
     ]
     return (
       <div>

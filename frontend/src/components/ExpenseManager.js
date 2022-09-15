@@ -3,8 +3,9 @@ import {Redirect} from  "react-router-dom"
 import {BrowserRouter, Switch, Route} from "react-router-dom"
 import ManageExpenses from './ManageExpenses';
 import Naviagtionbar from "./Navbar"
-import Summary from './Summary';
+import MonthlyExpense from './MonthlyExpense';
 import CreateCategoryForm from './CreateCategoryForm';
+import WeeklyExpense from './WeeklyExpense';
 import AddExpenseForm from './AddExpenseForm';
 
 
@@ -32,8 +33,11 @@ class ExpenseManager extends React.Component {
                                 <Route path="/manageexpenses">
                                     <ManageExpenses/>
                                 </Route>
-                                <Route path="/summary">
-                                    <Summary />
+                                <Route path="/monthlyexpense">
+                                    <MonthlyExpense />
+                                </Route>
+                                <Route path="/weeklyexpense">
+                                    <WeeklyExpense />
                                 </Route>
                             </Switch>
                         </div>   

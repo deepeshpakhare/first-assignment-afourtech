@@ -1,15 +1,32 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import ReactDatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+const moment = require("moment")
 
-export default function Summary(props) {
+
+export default function (props) {
   const [categoryList, setCategoryList] = useState(null);
   const [categoryId, setCategory] = useState(null);
   const [expense, setExpense] = useState(0);
   const [month, setMonth] = useState(null);
   const [year, setYear] = useState(null);
 
-  const monthArray = ["January", "February", "March", "April", "May", "June", "July"
-    , "August", "September", "October", "November", "December"]
+  const monthArray = [
+    {"month":"01", "val":"January"},
+    {"month":"02", "val":"February"},
+    {"month":"03", "val":"March"},
+    {"month":"04", "val":"April"},
+    {"month":"05", "val":"May"},
+    {"month":"06", "val":"June"},
+    {"month":"07", "val":"July"},
+    {"month":"08", "val":"August"},
+    {"month":"09", "val":"September"},
+    {"month":"10", "val":"October"},
+    {"month":"11", "val":"November"},
+    {"month":"12", "val":"December"},
+
+  ]
 
   const yearsFunc = () => {
     var years = [];
@@ -29,7 +46,10 @@ export default function Summary(props) {
   }
 
   function handleChangeMonth(e) {
-    setMonth(e.target.value);
+    setMonth(e);
+    var endDate = new Date(e)
+    endDate.setDate(endDate.getDate()+30); 
+    //console.log(endDate);
   }
 
   function handleChangeYear(e) {
@@ -56,17 +76,19 @@ export default function Summary(props) {
 
 
   const handleGetExpenses = () => {
-    console.log(month, " ", year)
+   
+    var endDate = new Date(month)
+    endDate.setDate(endDate.getDate()+30); 
+    console.log(endDate);
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Cookie", "connect.sid=s%3A6a4e7574-baae-4958-bf1c-dd03da07e908.SCmqi6wmaBaw34xhTddajrvQco0Mzl4%2FRTbCNmNi7Vk");
 
     var raw = JSON.stringify({
       "session_id": sessionInfo._id,
-      "start_date": "1-" + month + "-" + year,
-      "end_date": "31-" + month + "-" + year
+      "start_date": month,
       //"start_date": "1-September-2022",
-      // "end_date": "31-September-2022"
+       "end_date": endDate
     });
 
     var requestOptions = {
@@ -119,17 +141,21 @@ export default function Summary(props) {
             {categoryList ? categoryList.map((category) => <option value={category._id} key={category.category_name}>{category.category_name}</option>) : null}
           </select>
         </div>
-        <div className="col">
+        {/*<div className="col">
           <label htmlFor="month-select">Select a month</label><select onLoad={handleChangeMonth} onChange={handleChangeMonth} id="month-select" className="form-select" aria-label="Default select example" style={{ height: 40, width: 230 }} >
             <option selected>Select month</option>
-            {monthArray.map((month) => <option value={month} key={month}>{month}</option>)}
+            {monthArray.map((month) => <option value={month.month} key={month}>{month.val}</option>)}
           </select>
         </div>
         <div className="col">
-          <label htmlFor="year-select">Select an year</label><select onLoad={handleChangeYear} onChange={handleChangeYear} id="year-select" className="form-select" aria-label="Default select example" style={{ height: 40, width: 230 }} >
-            <option selected>Select year</option>
+          <label htmlFor="year-select">Select an year</label>{/*<select onLoad={handleChangeYear} onChange={handleChangeYear} id="year-select" className="form-select" aria-label="Default select example" style={{ height: 40, width: 230 }} >
+            {/*<option selected>Select year</option>
             {yearArray.map((year) => <option value={year} key={year}>{year}</option>)}
-          </select>
+            </select>*/}
+            <div className="col mt-5">
+              <ReactDatePicker showMonthYearPicker onChange={handleChangeMonth} dateFormat={"MM/yyyy"} selected={new Date()}></ReactDatePicker>
+            </div>
+            
         </div>
         <div className="col mt-4">
           <button id="addExpense" type="button" class="btn btn-success" style={{ height: 40, width: 230 }} onClick={handleGetExpenses}>Show Expense</button>
@@ -138,6 +164,5 @@ export default function Summary(props) {
           <span class="badge text-bg-warning"><h3>Rs: &nbsp;{expense}</h3></span>        
         </div>
       </div>
-    </div>
   )
 }

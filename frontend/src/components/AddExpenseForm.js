@@ -1,19 +1,26 @@
+import { parseISO } from 'date-fns';
 import React, { useState } from 'react'
 import Calendar from "react-calendar"
 import 'react-calendar/dist/Calendar.css';
 import ReactDatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+const moment = require("moment")
+
 
 export default function AddExpenseForm(props) {
     const [date, setDate] = useState(new Date());
     const [expense, setExpense] = useState(0);
     const [categoryId, setCategory] = useState(null);
+    const [sendingDate,setSendingDate] = useState("");
 
     const sessionInfo = JSON.parse(window.localStorage.getItem("session"));
 
     function changeDate(e) {
         setDate(e);
-        alert(e.toDateString())
+        console.log(e)
+        //var temp = new Date(e);
+       //setSendingDate(temp.getFullYear()+"-"+temp.getMonth()+"-"+temp.getDay());
+        //alert(new Date(e).toISOString());
     }
     function handleChangeExpense(e) {
         var val = parseInt(e.target.value);
@@ -52,6 +59,7 @@ export default function AddExpenseForm(props) {
             .then(response => response.json())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
+    
     }
 
     return (
@@ -59,7 +67,7 @@ export default function AddExpenseForm(props) {
         <div className='container-lg'>
             <div className="row">
                 <div className="col">
-                    Select Date:<ReactDatePicker className="form-select" selected={date} maxDate={new Date()} style={{ height: '80%', width: 40 }} onChange={changeDate}/>
+                    Select Date:<ReactDatePicker dateFormat={"dd/MM/yyyy"} className="form-select" selected={date} maxDate={new Date()} style={{ height: '80%', width: 40 }} onChange={changeDate}/>
                 </div>
             </div>
         
