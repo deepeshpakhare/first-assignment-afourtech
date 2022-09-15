@@ -152,11 +152,10 @@ export default function (props) {
             {/*<option selected>Select year</option>
             {yearArray.map((year) => <option value={year} key={year}>{year}</option>)}
             </select>*/}
-            <div className="col mt-5">
-              <ReactDatePicker showMonthYearPicker onChange={handleChangeMonth} dateFormat={"MM/yyyy"} selected={new Date()}></ReactDatePicker>
-            </div>
             
-        </div>
+            <div className="col mt-1"><label htmlFor="datepicker">Select date</label>
+              <ReactDatePicker id="datepicker" showMonthYearPicker onChange={handleChangeMonth} dateFormat={"MM/yyyy"} selected={new Date()}></ReactDatePicker>
+            </div>
         <div className="col mt-4">
           <button id="addExpense" type="button" class="btn btn-success" style={{ height: 40, width: 230 }} onClick={handleGetExpenses}>Show Expense</button>
         </div>
@@ -164,5 +163,6 @@ export default function (props) {
           <span class="badge text-bg-warning"><h3>Rs: &nbsp;{expense}</h3></span>        
         </div>
       </div>
+    </div>
   )
 }
