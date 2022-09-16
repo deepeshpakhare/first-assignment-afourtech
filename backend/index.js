@@ -175,6 +175,9 @@ app.post("/addExpense", async (req, res) => {
       amount: req.body.amount,
       date_of_expense: req.body.date_of_expense,
     })
+    //check if the total expense is gerater than monthly budget
+    //if yes then send firebase notification
+    //to activeSession.firebase_token
     res.send(createSuccessResponseData({
       "expense": insertedExpense
     }))
@@ -244,7 +247,7 @@ app.post("/setBudget", async (req, res) => {
       category_id: req.body.category_id
     });
     console.log(isBudgetAlreadyDefined);
-    if (isBudgetAlreadyDefined) {
+    if (await isBudgetAlreadyDefined) {
       var updatedBudget = await updateBudget({
         user_id: activeSession.user_id,
         category_id: req.body.category_id,
@@ -302,6 +305,10 @@ app.post("/getBudget", async (req, res) => {
   }
 }
 )
+
+//app.post("/fetchNotifications")
+
+
 
 const PORT = 8080;
 

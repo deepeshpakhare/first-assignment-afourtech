@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import ReactDatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import ExpenseTable from './ExpenseTable';
 const moment = require("moment")
 
 
@@ -11,6 +12,7 @@ export default function (props) {
   const [expense, setExpense] = useState(0);
   const [month, setMonth] = useState(null);
   const [year, setYear] = useState(null);
+  const [expenseList,setExpenseList] = useState(null);
 
   const monthArray = [
     {"month":"01", "val":"January"},
@@ -69,6 +71,7 @@ export default function (props) {
     console.log(sum);
     console.log(responseJson);
     setExpense(sum);
+    setExpenseList(responseJson.data.expensesInDateRange);
   }
 
   //sesion info

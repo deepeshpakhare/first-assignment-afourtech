@@ -25,6 +25,7 @@ function App() {
               <Route path="/monthlybudget" component={ExpenseManager}></Route>
               <Route path="/monthlyexpense" component={ExpenseManager}></Route>
               <Route path="/weeklyexpense" component={ExpenseManager}></Route>
+              <Route path="/setmonthlybudget" component={ExpenseManager}></Route>
           </Switch>
         </div>
       </Router>

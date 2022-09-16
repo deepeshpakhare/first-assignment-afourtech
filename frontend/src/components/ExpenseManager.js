@@ -7,7 +7,7 @@ import MonthlyExpense from './MonthlyExpense';
 import CreateCategoryForm from './CreateCategoryForm';
 import WeeklyExpense from './WeeklyExpense';
 import AddExpenseForm from './AddExpenseForm';
-
+import SetMonthlyBudget from './SetMonthlyBudget';
 
 
 class ExpenseManager extends React.Component {
@@ -38,6 +38,9 @@ class ExpenseManager extends React.Component {
                                 </Route>
                                 <Route path="/weeklyexpense">
                                     <WeeklyExpense />
+                                </Route>
+                                <Route path="/setmonthlybudget">
+                                    <SetMonthlyBudget />
                                 </Route>
                             </Switch>
                         </div>   
