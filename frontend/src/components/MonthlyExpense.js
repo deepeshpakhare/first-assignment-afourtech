@@ -51,7 +51,7 @@ export default function (props) {
     setMonth(e);
     var endDate = new Date(e)
     endDate.setDate(endDate.getDate()+30); 
-    //console.log(endDate);
+    console.log(e);
   }
 
   function handleChangeYear(e) {

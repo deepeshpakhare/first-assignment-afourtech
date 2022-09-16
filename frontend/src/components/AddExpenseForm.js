@@ -12,15 +12,62 @@ export default function AddExpenseForm(props) {
     const [date, setDate] = useState(new Date());
     const [expense, setExpense] = useState(0);
     const [categoryId, setCategoryId] = useState(null);
+    const [totalExpense, setTotalExpense] = useState(0);
+    var [startDate, setStartDate] = useState(null);
+    var [endDate, setEndDate] = useState(null);
+    var start_date = null;
+    var end_date = null;
 
     const sessionInfo = JSON.parse(window.localStorage.getItem("session"));
 
+    function showExpense(category_id, responseJson) {
+        var sum = 0;
+        //const parsedJason = JSON.parse(responseJson);
+        for (var expenseObject of responseJson.data.expensesInDateRange) {
+            if (expenseObject.category_id == category_id) {
+                //console.log("yes");
+                sum = sum + expenseObject.amount;
+            }
+        }
+        console.log(sum);
+        console.log(responseJson);
+        setTotalExpense(sum);
+        //setExpenseList(responseJson.data.expensesInDateRange);
+    }
+
+
+
     function changeDate(e) {
         setDate(e);
-        console.log(e)
+        //console.log(e)
+        start_date = new Date(e);
+        var current_month = start_date.getMonth() + 1;
+        var current_year = start_date.getFullYear();
+        //console.log(current_year);
+        start_date.setDate(start_date.getDate() - (start_date.getDate() - 1));
+        setStartDate(start_date);
+        end_date = new Date (new Date(e).setDate(new Date(e).getDate() - (new Date(e).getDate() - 1)));
+        if ((current_month === 1) || (current_month === 3) || (current_month === 5) || (current_month === 7)
+            || (current_month === 8) || (current_month === 10) || (current_month === 12)) {
+            end_date.setDate(end_date.getDate() + 30);
+        } else {
+            if ((current_year % 4 == 0) && (current_month == 2)) {
+                end_date.setDate(end_date.getDate() + 28);
+            }
+            if ((current_month == 2)) {
+                end_date.setDate(end_date.getDate() + 27);
+            }
+            end_date.setDate(end_date.getDate() + 29);
+        }
+
+        //end_date.setDate(end_date.getDate()+30);
+        console.log("start_date" + start_date);
+        console.log("end_date" + end_date);
         //var temp = new Date(e);
         //setSendingDate(temp.getFullYear()+"-"+temp.getMonth()+"-"+temp.getDay());
         //alert(new Date(e).toISOString());
+       
+        setEndDate(end_date);
     }
     function handleChangeExpense(e) {
         var val = parseInt(e.target.value);
@@ -37,6 +84,36 @@ export default function AddExpenseForm(props) {
         //console.log("initilay budget state is " + budget.value)
     }
 
+    const getExpenses = () => {
+        //var endDate = new Date(month)
+        //endDate.setDate(endDate.getDate() + 30);
+        console.log("get expenses is called");
+        console.log(startDate,endDate);
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Cookie", "connect.sid=s%3A6a4e7574-baae-4958-bf1c-dd03da07e908.SCmqi6wmaBaw34xhTddajrvQco0Mzl4%2FRTbCNmNi7Vk");
+
+        var raw = JSON.stringify({
+            "session_id": sessionInfo._id,
+            "start_date": startDate,
+            //"start_date": "1-September-2022",
+            "end_date": endDate
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:8080/getSummary", requestOptions)
+            .then(response => response.json())
+            .then(result =>
+                showExpense(categoryId, result)
+            )
+            .catch(error => console.log('error', error));
+    }
 
     async function getBudget() {
 
@@ -93,10 +170,10 @@ export default function AddExpenseForm(props) {
                 .then(response => response.json())
                 .then(result => console.log(result))
                 .catch(error => console.log('error', error));
+            getExpenses();
         } catch (ex) {
             alert("Please set the monthly budget first");
         }
-
     }
 
     return (
@@ -104,7 +181,7 @@ export default function AddExpenseForm(props) {
         <div className='container-lg'>
             <div className="row">
                 <div className="col">
-                    Select Date:<ReactDatePicker dateFormat={"dd/MM/yyyy"} className="form-select" selected={date} maxDate={new Date()} style={{ height: '80%', width: 40 }} onChange={changeDate} />
+                    Select Date:<ReactDatePicker withPortal dateFormat={"dd/MM/yyyy"} className="form-select" selected={date} maxDate={new Date()} style={{ height: '80%', width: 40 }} onChange={changeDate} />
                 </div>
             </div>
 
@@ -122,6 +199,9 @@ export default function AddExpenseForm(props) {
             </div>
             <div className="row mt-2">
                 <button id="addExpense" type="button" class="btn btn-success" style={{ height: 70, width: 530 }} onClick={handleAddExpense}>Add Expense</button>
+            </div>
+            <div className="col mt-4">
+                <span class="badge text-bg-warning"><h3>Rs: &nbsp;{totalExpense}</h3></span>
             </div>
         </div>
     )
