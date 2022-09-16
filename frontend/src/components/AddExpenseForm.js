@@ -145,8 +145,9 @@ export default function AddExpenseForm(props) {
 
     async function handleAddExpense(e) {
         //alert("Expense Added")
+        var budget = null;
         try {
-            var budget = await getBudget()
+            budget = await getBudget()
             console.log("budget is " + budget.amount);
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
@@ -170,7 +171,13 @@ export default function AddExpenseForm(props) {
                 .then(response => response.json())
                 .then(result => console.log(result))
                 .catch(error => console.log('error', error));
+
+            //getexpenses called
             getExpenses();
+            //console.log(budget)
+            if (totalExpense >= budget.amount) {
+                alert("Your total expense have exceeded budget");
+            }
         } catch (ex) {
             alert("Please set the monthly budget first");
         }
