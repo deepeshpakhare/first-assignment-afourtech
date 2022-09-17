@@ -19,15 +19,16 @@ export default function AddExpenseForm(props) {
     var [endDate, setEndDate] = useState(null);
     var start_date = null;
     var end_date = null;
-    var notificationCount;
+    //var notificationCount;
     var budget;
     var totalExpenseSum = 0;
     useEffect(
         () => {
-            notificationCount = 0;
+            //notificationCount = 0;
             budget = null;
             //totalExpense = 0;
             //setTotalExpense();
+            
         }
     )
 
@@ -42,7 +43,7 @@ export default function AddExpenseForm(props) {
                 sum = sum + expenseObject.amount;
             }
         }
-        console.log("sum is"+sum);
+        console.log("sum is" + sum);
         console.log(responseJson);
         setTotalExpense(sum);
         totalExpenseSum = sum;
@@ -182,6 +183,36 @@ export default function AddExpenseForm(props) {
 
     }
 
+   async function getAllNotifications() {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Cookie", "connect.sid=s%3A80dace41-48b4-47d8-a444-f8febddbfd90.1vgh6QFP%2FtUfsEdt%2B%2F91KgBJjKFVnMm6vghCiOGLmP8");
+
+        var raw = JSON.stringify({
+            "session_id": sessionInfo._id,
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        var response = await fetch("http://localhost:8080/myNotifications", requestOptions);
+        var result = await response.json()
+        console.log("all notifications are "+result.data.notifications);
+        return result;      
+    }
+
+    function getNotificationCount(notificationsJson) {
+        var count = 0;
+        for (var notification of notificationsJson.data.notifications) {
+            count++;
+        }
+        return count;
+    }
+
     async function handleAddExpense(e) {
         //alert("Expense Added")
 
@@ -218,8 +249,11 @@ export default function AddExpenseForm(props) {
 
                 alert("Your total expense have exceeded budget");
                 createNotification();
+                var notifications = await getAllNotifications();
+                var notificationCount = getNotificationCount(notifications);
+                console.log("notification count is "+notificationCount);
                 window.location.reload();
-                notificationCount = notificationCount + 1;
+                //notificationCount = notificationCount + 1;
                 console.log("notification count is " + notificationCount)
                 window.localStorage.setItem("notificationCount", notificationCount);
             }
@@ -251,9 +285,6 @@ export default function AddExpenseForm(props) {
             </div>
             <div className="row mt-2">
                 <button id="addExpense" type="button" class="btn btn-success" style={{ height: 70, width: 530 }} onClick={handleAddExpense}>Add Expense</button>
-            </div>
-            <div className="col mt-4">
-                <span class="badge text-bg-warning"><h3>Rs: &nbsp;{totalExpense}</h3></span>
             </div>
         </div>
     )

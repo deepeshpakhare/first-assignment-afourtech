@@ -8,6 +8,8 @@ import LoginForm from "./components/LoginForm";
 import ExpenseManager from "./components/ExpenseManager";
 import CreateCategoryForm from "./components/CreateCategoryForm";
 import Logout from "./components/Logout";
+import Notifications from "./components/Notifications";
+
 
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 const isUserLoggedInContext = React.createContext(false);
@@ -28,6 +30,7 @@ function App() {
               <Route path="/weeklyexpense" component={ExpenseManager}></Route>
               <Route path="/setmonthlybudget" component={ExpenseManager}></Route>
               <Route path="/logout" component={Logout}></Route>
+              <Route path="/notifications" component={ExpenseManager}></Route>
           </Switch>
         </div>
       </Router>

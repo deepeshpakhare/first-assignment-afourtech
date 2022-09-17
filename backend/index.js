@@ -336,9 +336,48 @@ app.post("/createNotification", async (req,res) => {
     }
 })
 
+app.post("/myNotifications", async (req,res) => {
+  try {
+    var activeSession = await getActiveSession(req.body.session_id);
+    if (activeSession == null) {
+      throw "Unauthorised access";
+    }
+    var notifications = await getUserNotifications({
+      user_id:activeSession.user_id,
+    });
+    res.send(createSuccessResponseData({
+      "notifications": notifications,
+    }))
+   } catch (ex) {
+      res.send({
+        "meta": {
+          "code": 1,
+          "message": ex.toString()
+        },
+      });
+    }
+})
 
-
-
+app.post("/fetchCategory", async (req,res) => {
+  try {
+    var activeSession = await getActiveSession(req.body.session_id);
+    if (activeSession == null) {
+      throw "Unauthorised access";
+    }
+    var category = await getCategory(req.body.category_id);
+    res.send(createSuccessResponseData({
+      "category": category,
+    }))
+  }catch(ex) {
+    res.send({
+      "meta": {
+        "code": 1,
+        "message": ex.toString()
+      },
+    });
+  }
+}
+)
 const PORT = 8080;
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`));

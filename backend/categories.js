@@ -29,7 +29,7 @@ const getUserCategories = async (user_id) => {
 }
 
 const getCategory = async (category_id) => {
-  var doc = await category.findById(category_id);
+  var doc = await category.findOne({_id:category_id});
   return doc;
 }
 
