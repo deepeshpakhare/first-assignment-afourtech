@@ -54,6 +54,11 @@ const {
 }
   = require("./budgets")
 
+const {
+  createNotification,
+  getUserNotifications,
+}
+  = require('./notifications') 
 
 const { insertCategory, getUserCategories, getCategory } = require("./categories");
 const { createSuccessResponseData } = require("./responseData");
@@ -306,6 +311,30 @@ app.post("/getBudget", async (req, res) => {
 }
 )
 
+app.post("/createNotification", async (req,res) => {
+  try {
+    var activeSession = await getActiveSession(req.body.session_id);
+    if (activeSession == null) {
+      throw "Unauthorised access";
+    }
+    var newNotification = await createNotification({
+      user_id:activeSession.user_id,
+      category_id:req.body.category_id,
+      budget_id: req.body.budget_id,
+      date_of_creation : req.body.date_of_creation,
+    });
+    res.send(createSuccessResponseData({
+      "notification": newNotification,
+    }))
+   } catch (ex) {
+      res.send({
+        "meta": {
+          "code": 1,
+          "message": ex.toString()
+        },
+      });
+    }
+})
 
 
 

@@ -7,16 +7,29 @@ import ReactDatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 const moment = require("moment")
 
+export const notificatoinContext = React.createContext(0);
+export var notiifcationCountNumber = window.localStorage.getItem("notificationCount");
 
 export default function AddExpenseForm(props) {
     const [date, setDate] = useState(new Date());
     const [expense, setExpense] = useState(0);
     const [categoryId, setCategoryId] = useState(null);
-    const [totalExpense, setTotalExpense] = useState(0);
+    const [totalExpense, setTotalExpense] = useState(null);
     var [startDate, setStartDate] = useState(null);
     var [endDate, setEndDate] = useState(null);
     var start_date = null;
     var end_date = null;
+    var notificationCount;
+    var budget;
+    var totalExpenseSum = 0;
+    useEffect(
+        () => {
+            notificationCount = 0;
+            budget = null;
+            //totalExpense = 0;
+            //setTotalExpense();
+        }
+    )
 
     const sessionInfo = JSON.parse(window.localStorage.getItem("session"));
 
@@ -29,9 +42,10 @@ export default function AddExpenseForm(props) {
                 sum = sum + expenseObject.amount;
             }
         }
-        console.log(sum);
+        console.log("sum is"+sum);
         console.log(responseJson);
         setTotalExpense(sum);
+        totalExpenseSum = sum;
         //setExpenseList(responseJson.data.expensesInDateRange);
     }
 
@@ -46,7 +60,7 @@ export default function AddExpenseForm(props) {
         //console.log(current_year);
         start_date.setDate(start_date.getDate() - (start_date.getDate() - 1));
         setStartDate(start_date);
-        end_date = new Date (new Date(e).setDate(new Date(e).getDate() - (new Date(e).getDate() - 1)));
+        end_date = new Date(new Date(e).setDate(new Date(e).getDate() - (new Date(e).getDate() - 1)));
         if ((current_month === 1) || (current_month === 3) || (current_month === 5) || (current_month === 7)
             || (current_month === 8) || (current_month === 10) || (current_month === 12)) {
             end_date.setDate(end_date.getDate() + 30);
@@ -66,7 +80,7 @@ export default function AddExpenseForm(props) {
         //var temp = new Date(e);
         //setSendingDate(temp.getFullYear()+"-"+temp.getMonth()+"-"+temp.getDay());
         //alert(new Date(e).toISOString());
-       
+
         setEndDate(end_date);
     }
     function handleChangeExpense(e) {
@@ -84,11 +98,11 @@ export default function AddExpenseForm(props) {
         //console.log("initilay budget state is " + budget.value)
     }
 
-    const getExpenses = () => {
+    const getExpenses = async () => {
         //var endDate = new Date(month)
         //endDate.setDate(endDate.getDate() + 30);
         console.log("get expenses is called");
-        console.log(startDate,endDate);
+        console.log(startDate, endDate);
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Cookie", "connect.sid=s%3A6a4e7574-baae-4958-bf1c-dd03da07e908.SCmqi6wmaBaw34xhTddajrvQco0Mzl4%2FRTbCNmNi7Vk");
@@ -107,12 +121,10 @@ export default function AddExpenseForm(props) {
             redirect: 'follow'
         };
 
-        fetch("http://localhost:8080/getSummary", requestOptions)
-            .then(response => response.json())
-            .then(result =>
-                showExpense(categoryId, result)
-            )
-            .catch(error => console.log('error', error));
+        var response = await fetch("http://localhost:8080/getSummary", requestOptions);
+        var result = await response.json()
+        showExpense(categoryId, result)
+
     }
 
     async function getBudget() {
@@ -142,10 +154,37 @@ export default function AddExpenseForm(props) {
         return result.data.budget;
     }
 
+    async function createNotification() {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Cookie", "connect.sid=s%3A80dace41-48b4-47d8-a444-f8febddbfd90.1vgh6QFP%2FtUfsEdt%2B%2F91KgBJjKFVnMm6vghCiOGLmP8");
+
+        var raw = JSON.stringify({
+            "session_id": sessionInfo._id,
+            "category_id": categoryId,
+            "budget_id": budget._id,
+            "date_of_creation": new Date(),
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        var response = await fetch("http://localhost:8080/createNotification", requestOptions);
+        var result = await response.json();
+        console.log(result);
+        if (result.meta.code != 0) {
+            throw result.meta.message;
+        }
+
+    }
 
     async function handleAddExpense(e) {
         //alert("Expense Added")
-        var budget = null;
+
         try {
             budget = await getBudget()
             console.log("budget is " + budget.amount);
@@ -173,10 +212,16 @@ export default function AddExpenseForm(props) {
                 .catch(error => console.log('error', error));
 
             //getexpenses called
-            getExpenses();
-            //console.log(budget)
-            if ((totalExpense >= budget.amount)||(expense>budget.amount)) {
+            await getExpenses();
+            console.log("total expense is" + totalExpenseSum)
+            if ((totalExpenseSum >= budget.amount) || (expense >= budget.amount)) {
+
                 alert("Your total expense have exceeded budget");
+                createNotification();
+                window.location.reload();
+                notificationCount = notificationCount + 1;
+                console.log("notification count is " + notificationCount)
+                window.localStorage.setItem("notificationCount", notificationCount);
             }
         } catch (ex) {
             alert("Please set the monthly budget first");

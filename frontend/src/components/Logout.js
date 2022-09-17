@@ -7,6 +7,7 @@ export default function Logout() {
     {window.localStorage.removeItem("session")}
     {window.localStorage.removeItem("username")}
     {console.log(window.localStorage.getItem("loginSatus"));}
+    {window.localStorage.removeItem("notificationCount");}
   return (
     <div>
       <center>

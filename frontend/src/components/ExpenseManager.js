@@ -2,7 +2,7 @@ import React from 'react'
 import {Redirect} from  "react-router-dom"
 import {BrowserRouter, Switch, Route} from "react-router-dom"
 import ManageExpenses from './ManageExpenses';
-import Naviagtionbar from "./Navbar"
+import Naviagtionbar from "./Navigationbar"
 import MonthlyExpense from './MonthlyExpense';
 import CreateCategoryForm from './CreateCategoryForm';
 import WeeklyExpense from './WeeklyExpense';
@@ -11,11 +11,14 @@ import SetMonthlyBudget from './SetMonthlyBudget';
 import Logout from './Logout';
 import { authContext } from "./LoginForm";
 import PleaseLogin from './PleaseLogin';
+import { notificatoinContext } from './AddExpenseForm';
 
 export default function ExpenseManager() {
     const user = React.useContext(authContext);
     console.log("user is in expense manager "+user);
     console.log(authContext);
+    const notificationCount = React.useContext(notificatoinContext);
+    console.log("notification count"+notificationCount);
     if(user == null) {
         return (
             <PleaseLogin></PleaseLogin>
