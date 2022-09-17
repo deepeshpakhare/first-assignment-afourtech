@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink , useNavigate } from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavbarBrand, Stack } from 'react-bootstrap';
+import Logout from './Logout';
 
 export default class navbar extends Component {
   render() {
@@ -16,6 +17,11 @@ export default class navbar extends Component {
       {to:"weeklyexpense",val:"Weekly Expense"},
 
     ]
+   
+    function navigateToLogout() {
+      window.location.href = "http://localhost:3000/logout";
+    }
+
     return (
       <div>
         <Navbar bg="dark" variant="dark">
@@ -33,7 +39,7 @@ export default class navbar extends Component {
               </button></h5>
             </NavLink></Nav.Link>
             <Nav.Link ><NavLink to="logout"><h5>
-              <button type="button" class="btn btn-danger" style={{height:60}}>
+              <button onClick={navigateToLogout} type="button" class="btn btn-danger" style={{height:60}}>
                 Logout
               </button></h5>
             </NavLink></Nav.Link>

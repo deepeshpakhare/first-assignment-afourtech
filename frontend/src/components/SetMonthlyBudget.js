@@ -60,7 +60,10 @@ export default function SetMonthlyBudget() {
 
         fetch("http://localhost:8080/setBudget", requestOptions)
             .then(response => response.json())
-            .then(result => console.log(result))
+            .then((result) => {
+                console.log(result);
+                alert("Your monthly budget has been set to Rs. "+amount)
+            })
             .catch(error => console.log('error', error));
     }
 

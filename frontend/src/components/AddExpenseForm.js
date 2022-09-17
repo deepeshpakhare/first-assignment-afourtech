@@ -175,7 +175,7 @@ export default function AddExpenseForm(props) {
             //getexpenses called
             getExpenses();
             //console.log(budget)
-            if (totalExpense >= budget.amount) {
+            if ((totalExpense >= budget.amount)||(expense>budget.amount)) {
                 alert("Your total expense have exceeded budget");
             }
         } catch (ex) {
@@ -193,7 +193,7 @@ export default function AddExpenseForm(props) {
             </div>
 
             <div className="row mt-5 ml-3">
-                <select onChange={setSelectedCategory} defaultValue="1" className="form-select" aria-label="Default select example" style={{ height: '80%', width: 530 }} >
+                <select onClick={setSelectedCategory} onLoad={setSelectedCategory} onChange={setSelectedCategory} className="form-select" aria-label="Default select example" style={{ height: '80%', width: 530 }} >
                     <option>Select a category</option>
                     {props.categories ? props.categories.map((category) => <option value={category._id} key={category.category_name}>{category.category_name}</option>) : null}
                 </select>

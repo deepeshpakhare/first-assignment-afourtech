@@ -3,12 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import {authProvider} from './components/LoginForm';
+import LoginForm from './components/LoginForm';
+import { authContext } from './components/LoginForm';
+import { userAuth } from './components/LoginForm';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <div>
-    <App/>
+    <authContext.Provider value={userAuth}>
+      <App/>
+    </authContext.Provider>    
   </div>
 );
 
