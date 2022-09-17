@@ -82,6 +82,9 @@ class LoginForm extends React.Component {
       .then(
         (responseJson) => {
           console.log(responseJson);
+          if (responseJson.meta.code === 1) {
+            alert(responseJson.meta.message)
+          }
           //
           window.localStorage.setItem("session", JSON.stringify(responseJson.data.session));
           window.localStorage.setItem("username", JSON.stringify(responseJson.data.username));
@@ -105,6 +108,11 @@ class LoginForm extends React.Component {
   render() {
     const buttonStyle = { width: 100 };
     const textBoxStyle = { width: 10 };
+    {
+      window.localStorage.removeItem("session");
+      window.localStorage.removeItem("username");
+      window.localStorage.removeItem("loginStatus");
+    }
     return (
       <section>
         <div>
