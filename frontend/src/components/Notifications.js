@@ -3,14 +3,19 @@ import { useEffect } from 'react';
 import { useState } from 'react'
 
 export default function Notifications() {
-  const [categoryId, setCategoryId] = useState(null);
 
-  var data = [];
-  var categoryNames = [];
-  var budgetsArray = [];
-  var datesArray = [];
+  var [data,setData] = useState([]);
+  var [categoryNames,setCategoryNames] = useState([]);
+  var [budgetsArray,setBudgetsArray] = useState([]);
+  var [datesArray,setDatesArray] = useState([]);
 
   const sessionInfo = JSON.parse(window.localStorage.getItem("session"));
+
+  useEffect(
+    () => {
+      handleShowNotification();
+    }
+  )
 
   async function getAllNotifications() {
     var myHeaders = new Headers();
@@ -80,9 +85,10 @@ export default function Notifications() {
 
 
 
- async function handleShowNotification(e) {
+ async function handleShowNotification() {
     var notifications = await getAllNotifications();
     var count = 0;
+    var temp = [];
     for (var notification of notifications) {
       count++;
       var categoryName = await getCategoryName(notification.category_id);
@@ -92,25 +98,34 @@ export default function Notifications() {
       console.log("budget amount "+budgetAmount);
       budgetsArray.push(budgetAmount);
       var date = notification.date_of_creation;
+      var tempDate = new Date(date);
       console.log("date "+date);
-      datesArray.push(date);
+      datesArray.push(tempDate.toDateString());
     }
     for (var i=0; i<count; i++) {
-        data.push({
+        temp.push({
           categoryName:categoryNames[i],
           budgetAmount:budgetsArray[i],
           date:datesArray[i],
-        })
+        });
     }
+    setData(temp);
     console.log("length of data is "+data.length)
+  }
+
+  function getFullData(item) {
+    return (<li className="list-group-item">The total expense for the category <span class="badge rounded-pill text-bg-primary">{item.categoryName}</span> has crossed the budget amount &nbsp;
+    <span class="badge rounded-pill text-bg-danger"> Rs. {item.budgetAmount}</span> on the date &nbsp;
+     <span class="badge rounded-pill text-bg-success">{item.date}</span></li>);
   }
 
   return (
     <div>
-      <br />
-      <br />
-      <div className="row">
-        <button onClick={handleShowNotification} style={{ width: "50%" }}>Show notifications</button>
+      <div className="row ">
+        {/*<button onClick={handleShowNotification} style={{ width: "50%" }}>Show notifications</button>*/}
+        <ul className="list-group ml-5">
+        {data.map(getFullData)}
+        </ul>
       </div>
     </div>
   )
