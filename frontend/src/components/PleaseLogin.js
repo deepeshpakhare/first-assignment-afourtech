@@ -9,8 +9,8 @@ export default function PleaseLogin() {
             <br />
             <br />
             <br />
-            Please login to use the service!
-          <Nav.Link ><NavLink to="login"> login
+            <h2>Please login to use the service!</h2>
+          <Nav.Link ><NavLink to="login"><h2>login</h2> 
           </NavLink></Nav.Link>
           </center>    
         </div>

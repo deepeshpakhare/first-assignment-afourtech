@@ -7,8 +7,7 @@ import ReactDatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 const moment = require("moment")
 
-export const notificatoinContext = React.createContext(0);
-export var notiifcationCountNumber = window.localStorage.getItem("notificationCount");
+
 
 export default function AddExpenseForm(props) {
     const [date, setDate] = useState(new Date());

@@ -14,8 +14,8 @@ export default function Logout() {
         <br />
         <br />
         <br />
-        You have successfully logged out!
-      <Nav.Link ><NavLink to="login"> login
+        <h2>You have successfully logged out!</h2>
+      <Nav.Link ><NavLink to="login"> <h2>login Again</h2>
       </NavLink></Nav.Link>
       </center>    
     </div>

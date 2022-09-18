@@ -311,6 +311,30 @@ app.post("/getBudget", async (req, res) => {
 }
 )
 
+app.post("/myBudgets", async (req, res) => {
+
+  try {
+    var activeSession = await getActiveSession(req.body.session_id);
+    if (activeSession == null) {
+      throw "Unauthorised access";
+    }
+    var budgets = await getBudget({
+      user_id: activeSession.user_id,
+    })
+    res.send(createSuccessResponseData({
+      "budgets": budgets
+    }))
+  }catch (ex) {
+    res.send({
+      "meta": {
+        "code": 1,
+        "message": ex.toString()
+      },
+    });
+  }
+}
+)
+
 app.post("/createNotification", async (req,res) => {
   try {
     var activeSession = await getActiveSession(req.body.session_id);

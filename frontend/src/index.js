@@ -7,16 +7,13 @@ import {authProvider} from './components/LoginForm';
 import LoginForm from './components/LoginForm';
 import { authContext } from './components/LoginForm';
 import { userAuth } from './components/LoginForm';
-import { notificatoinContext } from './components/AddExpenseForm';
-import { notiifcationCountNumber } from './components/AddExpenseForm';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <div>
     <authContext.Provider value={userAuth}>
-      <notificatoinContext.Provider value={notiifcationCountNumber}>
         <App/>
-      </notificatoinContext.Provider>
     </authContext.Provider>    
   </div>
 );

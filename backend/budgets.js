@@ -26,12 +26,20 @@ const doesBudgetExistAlredy = async (budgetData) => {
 }
 
 const getBudget = async(budgetData) => {
-    var doc = await budget.findOne({user_id:budgetData.user_id,category_id:budgetData.category_id});
-    if(doc != null) {
-        return doc;
+    if (budgetData.category_id != undefined) {
+        var doc = await budget.findOne({user_id:budgetData.user_id,category_id:budgetData.category_id});
+        if(doc != null) {
+            return doc;
+        }
+    }else{
+        var docs = await budget.find({user_id:budgetData.user_id});
+        if(docs != null) {
+            return docs;
+        }
     }
     throw "No budget found";
 }
+
 
 module.exports = {
     "insertBudget":insertBudget,

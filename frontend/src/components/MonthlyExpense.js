@@ -12,21 +12,21 @@ export default function (props) {
   const [expense, setExpense] = useState(0);
   const [month, setMonth] = useState(null);
   const [year, setYear] = useState(null);
-  const [expenseList,setExpenseList] = useState(null);
+  const [expenseList, setExpenseList] = useState([]);
 
   const monthArray = [
-    {"month":"01", "val":"January"},
-    {"month":"02", "val":"February"},
-    {"month":"03", "val":"March"},
-    {"month":"04", "val":"April"},
-    {"month":"05", "val":"May"},
-    {"month":"06", "val":"June"},
-    {"month":"07", "val":"July"},
-    {"month":"08", "val":"August"},
-    {"month":"09", "val":"September"},
-    {"month":"10", "val":"October"},
-    {"month":"11", "val":"November"},
-    {"month":"12", "val":"December"},
+    { "month": "01", "val": "January" },
+    { "month": "02", "val": "February" },
+    { "month": "03", "val": "March" },
+    { "month": "04", "val": "April" },
+    { "month": "05", "val": "May" },
+    { "month": "06", "val": "June" },
+    { "month": "07", "val": "July" },
+    { "month": "08", "val": "August" },
+    { "month": "09", "val": "September" },
+    { "month": "10", "val": "October" },
+    { "month": "11", "val": "November" },
+    { "month": "12", "val": "December" },
 
   ]
 
@@ -50,7 +50,7 @@ export default function (props) {
   function handleChangeMonth(e) {
     setMonth(e);
     var endDate = new Date(e)
-    endDate.setDate(endDate.getDate()+30); 
+    endDate.setDate(endDate.getDate() + 30);
     console.log(e);
   }
 
@@ -61,17 +61,19 @@ export default function (props) {
 
   function showExpense(category_id, responseJson) {
     var sum = 0;
+    var expList = [];
     //const parsedJason = JSON.parse(responseJson);
     for (var expenseObject of responseJson.data.expensesInDateRange) {
       if (expenseObject.category_id == category_id) {
         //console.log("yes");
         sum = sum + expenseObject.amount;
+        expList.push(expenseObject);
       }
     }
     console.log(sum);
     console.log(responseJson);
     setExpense(sum);
-    setExpenseList(responseJson.data.expensesInDateRange);
+    setExpenseList(expList);
   }
 
   //sesion info
@@ -79,9 +81,9 @@ export default function (props) {
 
 
   const handleGetExpenses = () => {
-   
+
     var endDate = new Date(month)
-    endDate.setDate(endDate.getDate()+30); 
+    endDate.setDate(endDate.getDate() + 30);
     console.log(endDate);
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -91,7 +93,7 @@ export default function (props) {
       "session_id": sessionInfo._id,
       "start_date": month,
       //"start_date": "1-September-2022",
-       "end_date": endDate
+      "end_date": endDate
     });
 
     var requestOptions = {
@@ -155,17 +157,46 @@ export default function (props) {
             {/*<option selected>Select year</option>
             {yearArray.map((year) => <option value={year} key={year}>{year}</option>)}
             </select>*/}
-            
-            <div className="col mt-1"><label htmlFor="datepicker">Select date</label>
-              <ReactDatePicker id="datepicker" showMonthYearPicker onChange={handleChangeMonth} dateFormat={"MM/yyyy"} selected={new Date()}></ReactDatePicker>
-            </div>
-        <div className="col mt-4">
-          <button id="addExpense" type="button" class="btn btn-success" style={{ height: 40, width: 230 }} onClick={handleGetExpenses}>Show Expense</button>
+
+        <div className="col mt-1"><label htmlFor="datepicker">Select date</label>
+          <ReactDatePicker id="datepicker" showMonthYearPicker onChange={handleChangeMonth} dateFormat={"MM/yyyy"} selected={new Date()}></ReactDatePicker>
         </div>
         <div className="col mt-4">
-          <span class="badge text-bg-warning"><h3>Rs: &nbsp;{expense}</h3></span>        
+          <button id="addExpense" type="button" class="btn btn-success" style={{ height: 40, width: 230 }} onClick={handleGetExpenses}>Show Monthly Expense</button>
+        </div>
+        <div className="col mt-4">
+          <span class="badge text-bg-warning"><h3>Rs: &nbsp;{expense}</h3></span>
         </div>
       </div>
+      <table className="table table-success table-striped w-50">
+        <thead>
+          <tr>
+            <th>
+              Date
+            </th>
+            <th>
+              Amount
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {expenseList.map((expense) => (
+            <tr >
+              <td>{new Date(expense.date_of_expense).toDateString()}</td>
+              <td className='text-end pe-5'>{expense.amount}</td>
+            </tr>
+          ))}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td  className='text-end pe-5'colspan="2">
+              <span className="badge text-bg-warning">
+                <h3>Total Rs: &nbsp;{expense}</h3>
+              </span>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
   )
 }

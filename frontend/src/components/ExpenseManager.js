@@ -11,8 +11,9 @@ import SetMonthlyBudget from './SetMonthlyBudget';
 import Logout from './Logout';
 import { authContext } from "./LoginForm";
 import PleaseLogin from './PleaseLogin';
-import { notificatoinContext } from './AddExpenseForm';
-import Notifications from './Notifications';
+import { useState } from 'react';
+import { notificatoinContext, notiifcationCountNumber } from './NotificationContext';
+
 
 export default function ExpenseManager() {
     const user = React.useContext(authContext);
@@ -20,14 +21,14 @@ export default function ExpenseManager() {
     console.log(authContext);
     const notificationCount = React.useContext(notificatoinContext);
     console.log("notification cout" + notificationCount);
-    var flag = false;
+    var [flag,setFlag] = useState(false);
 
    
 
     useEffect(
         () => {
             setNotificationCount();
-        },
+        },[]
     )
 
     if (user == null) {
@@ -76,7 +77,6 @@ export default function ExpenseManager() {
         console.log("notification count is " + notificationNumber);
         //window.location.reload();
         //notificationCount = notificationCount + 1;
-        console.log("notification count is " + notificationNumber)
         window.localStorage.setItem("notificationCount", notificationNumber);
     }
 
@@ -110,9 +110,6 @@ export default function ExpenseManager() {
                                 </Route>
                                 <Route path="/setmonthlybudget">
                                     <SetMonthlyBudget />
-                                </Route>
-                                <Route path="/notifications">
-                                    <Notifications />
                                 </Route>
                             </Switch>
                         </div>
