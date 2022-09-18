@@ -238,7 +238,11 @@ export default function AddExpenseForm(props) {
 
             fetch("http://localhost:8080/addExpense", requestOptions)
                 .then(response => response.json())
-                .then(result => console.log(result))
+                .then((result) => {
+                    console.log(result);
+                    alert("Expense has been successfully added");
+                    document.getElementById("expenseAmount").value = "";
+                })
                 .catch(error => console.log('error', error));
 
             //getexpenses called
@@ -256,6 +260,7 @@ export default function AddExpenseForm(props) {
                 console.log("notification count is " + notificationCount)
                 window.localStorage.setItem("notificationCount", notificationCount);
             }
+            
         } catch (ex) {
             alert("Please set the monthly budget first");
         }
