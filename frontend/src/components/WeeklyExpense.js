@@ -10,6 +10,7 @@ export default function WeeklyExpense() {
     const [month, setMonth] = useState(null);
     const [year, setYear] = useState(null);
     const [week, setWeek] = useState(null);
+    const [expenseList, setExpenseList] = useState([]);
 
     const [startDate, setStartDate] = useState(new Date());
     var end_date = new Date();
@@ -53,16 +54,19 @@ export default function WeeklyExpense() {
 
     function showExpense(category_id, responseJson) {
         var sum = 0;
+        var expList = [];
         //const parsedJason = JSON.parse(responseJson);
         for (var expenseObject of responseJson.data.expensesInDateRange) {
             if (expenseObject.category_id == category_id) {
                 //console.log("yes");
                 sum = sum + expenseObject.amount;
+                expList.push(expenseObject);
             }
         }
         console.log(sum);
         console.log(responseJson);
         setExpense(sum);
+        setExpenseList(expList);
     }
 
     //sesion info
@@ -72,7 +76,7 @@ export default function WeeklyExpense() {
     const handleGetExpenses = () => {
 
         var new_start_date = new Date();
-        new_start_date.setDate(startDate.getDate()-1);
+        new_start_date.setDate(startDate.getDate() - 1);
         console.log(new_start_date);
 
         //console.log(month, " ", year)
@@ -209,6 +213,35 @@ export default function WeeklyExpense() {
                 <div className="col mt-4">
                     <span class="badge text-bg-warning"><h3>Rs: &nbsp;{expense}</h3></span>
                 </div>
+                <table className="table table-success table-striped w-50 mt-4 ">
+                    <thead>
+                        <tr>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                Amount
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {expenseList.map((expense) => (
+                            <tr >
+                                <td>{new Date(expense.date_of_expense).toDateString()}</td>
+                                <td className='text-end pe-5'>{expense.amount}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td className='text-end pe-5' colspan="2">
+                                <span className="badge text-bg-warning">
+                                    <h3>Total Rs: &nbsp;{expense}</h3>
+                                </span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     )

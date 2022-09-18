@@ -124,7 +124,7 @@ class LoginForm extends React.Component {
             <br />
             <br />
             <center>
-              <h2>Log in</h2>
+              <h2>Log In</h2>
               <br />
               <div className="form-floating mb-3">
                 <input style={{ width: "25%" }} value={this.state.username} onChange={this.handleChangeUsername} type="email" className="form-control" id="username" />
@@ -137,14 +137,14 @@ class LoginForm extends React.Component {
               <br />
               <Stack gap={2} className="col-md-5 mx-auto">
                 <div className="mb-2">
-                  <Button style={{ width: "60%" }} variant="primary" size="lg" onClick={this.handleSubmit}>
+                  <Button type="submit" style={{ width: "60%" }} variant="primary" size="lg" onClick={this.handleSubmit}>
                     Login
                   </Button>
                 </div>
                 <div className="mb-2">
                   Not registered ?
                   <Link to="/registration">
-                    Register
+                  &nbsp;Register
                   </Link>
                 </div>
               </Stack>

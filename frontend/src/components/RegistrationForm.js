@@ -30,7 +30,12 @@ class RegistrationForm extends React.Component {
     }
     
     handleChangeUsername(event) {
-      this.setState({username: event.target.value});
+      var tempUsername = event.target.value;
+      if (tempUsername.includes(' ')) {
+        alert("Username should not contain space");
+      }else{
+        this.setState({username: event.target.value});
+      }   
     }
 
     handleChangeTempPassword(event) {
@@ -162,7 +167,7 @@ class RegistrationForm extends React.Component {
                           <div className="mb-2">
                             Already registered ?
                           <Link to="/login">     
-                              Login
+                             &nbsp; Login
                             </Link>
                           </div>
                         </Stack>
