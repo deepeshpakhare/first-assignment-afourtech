@@ -149,7 +149,7 @@ export default function Navigationbar() {
 
   return (
     <div>
-      <Navbar bg="dark" variant="dark">
+      <Navbar bg="light" variant="light">
         <Container>
           <Stack>
             <NavbarBrand><h1><span class="badge rounded-pill text-bg-danger">Expense Manager</span></h1></NavbarBrand>

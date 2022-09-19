@@ -11,9 +11,10 @@ export default function WeeklyExpense() {
     const [year, setYear] = useState(null);
     const [week, setWeek] = useState(null);
     const [expenseList, setExpenseList] = useState([]);
+    //const [endDate,setEndDate] = useState(null);
 
     const [startDate, setStartDate] = useState(new Date());
-    var end_date = new Date();
+    var end_date = new Date(startDate);
     var temp = end_date.setDate(new Date().getDate() + 6)
     const [endDate, setEndDate] = useState(end_date);
 
@@ -52,6 +53,13 @@ export default function WeeklyExpense() {
         setWeek(e.target.value)
     }
 
+    function handleSetWeek(e) {
+        setStartDate(e);
+        var end_date = new Date(startDate);
+        var temp = end_date.setDate(new Date().getDate() + 6)
+        setEndDate(temp)
+    }
+
     function showExpense(category_id, responseJson) {
         var sum = 0;
         var expList = [];
@@ -76,7 +84,7 @@ export default function WeeklyExpense() {
     const handleGetExpenses = () => {
 
         var new_start_date = new Date();
-        new_start_date.setDate(startDate.getDate() - 1);
+        new_start_date.setDate(startDate.getDate());
         console.log(new_start_date);
 
         //console.log(month, " ", year)
@@ -191,18 +199,16 @@ export default function WeeklyExpense() {
                     <label htmlFor="datepicker">Select Week</label>
                     <DatePicker
                         selected={startDate}
-                        onChange={(date) => setStartDate(date)}
+                        onChange={handleSetWeek}
                         selectsStart
                         startDate={startDate}
-                        endDate={endDate}
                         id="datepicker"
                     />
                     <DatePicker
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
                         selectsEnd
-                        startDate={startDate}
-                        endDate={endDate}
+                        startDate={endDate}
                         minDate={startDate}
                     />
                 </div>

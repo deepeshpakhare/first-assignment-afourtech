@@ -21,10 +21,10 @@ export default function Notifications(props) {
     return (
       <Row>
         <Col md={12} style={{'border-bottom': '1px solid red'}}>
-          <p>Expense on <span class="badge rounded-pill text-bg-primary">{item.categoryName}</span>
-          <br />has crossed the <br /> budget amount
+          <p>Expense on &nbsp; <span class="badge rounded-pill text-bg-primary">{item.categoryName}</span>
+          <br />has crossed the <br /> budget amount  &nbsp;
           <span class="badge rounded-pill text-bg-danger"> Rs. {item.budgetAmount}</span> <br />
-          on the date 
+          on the date &nbsp;&nbsp;
           <span class="badge rounded-pill text-bg-success">{item.date.toDateString()}</span></p>
         </Col>
       </Row>

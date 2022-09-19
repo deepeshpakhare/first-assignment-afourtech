@@ -6,9 +6,12 @@
 }
 
 body{
-  background: #a0dfe4;  
+  background: #a6a77d;  
 }
 
+.color-nav {
+  background-color: rgb(107, 165, 165);
+}
 .App {
   height: 200vh;
   display: flex;

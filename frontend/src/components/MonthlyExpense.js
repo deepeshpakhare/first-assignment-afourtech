@@ -13,6 +13,7 @@ export default function (props) {
   const [month, setMonth] = useState(null);
   const [year, setYear] = useState(null);
   const [expenseList, setExpenseList] = useState([]);
+  const [startDate, setStartDate] = useState(null);
 
   const monthArray = [
     { "month": "01", "val": "January" },
@@ -48,6 +49,7 @@ export default function (props) {
   }
 
   function handleChangeMonth(e) {
+    setStartDate(e);
     setMonth(e);
     var endDate = new Date(e)
     endDate.setDate(endDate.getDate() + 30);
@@ -158,8 +160,8 @@ export default function (props) {
             {yearArray.map((year) => <option value={year} key={year}>{year}</option>)}
             </select>*/}
 
-        <div className="col mt-1"><label htmlFor="datepicker">Select date</label>
-          <ReactDatePicker id="datepicker" showMonthYearPicker onChange={handleChangeMonth} dateFormat={"MM/yyyy"} selected={new Date()}></ReactDatePicker>
+        <div className="col mt-1"><label htmlFor="datepicker">Select Month</label>
+          <ReactDatePicker id="datepicker" showMonthYearPicker onChange={handleChangeMonth} dateFormat={"MM/yyyy"} selected={startDate} ></ReactDatePicker>
         </div>
         <div className="col mt-4">
           <button id="addExpense" type="button" class="btn btn-success" style={{ height: 40, width: 230 }} onClick={handleGetExpenses}>Show Monthly Expense</button>
