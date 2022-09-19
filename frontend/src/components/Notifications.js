@@ -35,7 +35,7 @@ export default function Notifications(props) {
     <Card style={{ width: '18rem' }}>
       <Card.Body>
         <Container fluid="md">
-          {props.data && props.data.map(getFullData)}
+          {props.data && props.data.slice(0).reverse().map(getFullData)}
         </Container>
       </Card.Body>
     </Card>

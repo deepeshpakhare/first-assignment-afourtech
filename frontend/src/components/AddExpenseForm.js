@@ -27,7 +27,7 @@ export default function AddExpenseForm(props) {
             budget = null;
             //totalExpense = 0;
             //setTotalExpense();
-            
+
         }
     )
 
@@ -182,7 +182,7 @@ export default function AddExpenseForm(props) {
 
     }
 
-   async function getAllNotifications() {
+    async function getAllNotifications() {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Cookie", "connect.sid=s%3A80dace41-48b4-47d8-a444-f8febddbfd90.1vgh6QFP%2FtUfsEdt%2B%2F91KgBJjKFVnMm6vghCiOGLmP8");
@@ -200,8 +200,8 @@ export default function AddExpenseForm(props) {
 
         var response = await fetch("http://localhost:8080/myNotifications", requestOptions);
         var result = await response.json()
-        console.log("all notifications are "+result.data.notifications);
-        return result;      
+        console.log("all notifications are " + result.data.notifications);
+        return result;
     }
 
     function getNotificationCount(notificationsJson) {
@@ -254,13 +254,13 @@ export default function AddExpenseForm(props) {
                 createNotification();
                 var notifications = await getAllNotifications();
                 var notificationCount = getNotificationCount(notifications);
-                console.log("notification count is "+notificationCount);
+                console.log("notification count is " + notificationCount);
                 window.location.reload();
                 //notificationCount = notificationCount + 1;
                 console.log("notification count is " + notificationCount)
                 window.localStorage.setItem("notificationCount", notificationCount);
             }
-            
+
         } catch (ex) {
             alert("Please set the monthly budget first");
         }
@@ -276,19 +276,25 @@ export default function AddExpenseForm(props) {
             </div>
 
             <div className="row mt-5 ml-3">
-                <select onClick={setSelectedCategory} onLoad={setSelectedCategory} onChange={setSelectedCategory} className="form-select" aria-label="Default select example" style={{ height: '80%', width: 530 }} >
-                    <option>Select a category</option>
-                    {props.categories ? props.categories.map((category) => <option value={category._id} key={category.category_name}>{category.category_name}</option>) : null}
-                </select>
+                <div className="col">
+                    <select onClick={setSelectedCategory} onLoad={setSelectedCategory} onChange={setSelectedCategory} className="form-select" aria-label="Default select example" style={{ height: '90', width: 525 }} >
+                        <option>Select a category</option>
+                        {props.categories ? props.categories.map((category) => <option value={category._id} key={category.category_name}>{category.category_name}</option>) : null}
+                    </select>
+                </div>
+
             </div>
             <div className="row mt-5">
                 <div className="form-floating mb-3">
-                    <input className="form-control" type="text" id="expenseAmount" onChange={handleChangeExpense} placeholder='enter category' style={{ height: '80%', width: 530 }} />
+                    <input className="form-control" type="text" id="expenseAmount" onChange={handleChangeExpense} placeholder='enter category' style={{ height: '80%', width: 525 }} />
                     <label for="expenseAmount">Expense:</label>
                 </div>
             </div>
             <div className="row mt-2">
-                <button id="addExpense" type="button" class="btn btn-success" style={{ height: 70, width: 530 }} onClick={handleAddExpense}>Add Expense</button>
+                <div className="col">
+                    <button id="addExpense" type="button" class="btn btn-success" style={{ height: 70, width: 530 }} onClick={handleAddExpense}>Add Expense</button>
+
+                </div>
             </div>
         </div>
     )

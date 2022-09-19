@@ -13,10 +13,11 @@ export default function WeeklyExpense() {
     const [expenseList, setExpenseList] = useState([]);
     //const [endDate,setEndDate] = useState(null);
 
-    const [startDate, setStartDate] = useState(new Date());
-    var end_date = new Date(startDate);
-    var temp = end_date.setDate(new Date().getDate() + 6)
-    const [endDate, setEndDate] = useState(end_date);
+   
+    var end_date = new Date();
+    var temp = end_date.setDate(new Date().getDate() - 6)
+    const [startDate, setStartDate] = useState(temp);
+    const [endDate, setEndDate] = useState(new Date());
 
 
     const weekArray = [1, 2, 3, 4, 5]
@@ -54,12 +55,18 @@ export default function WeeklyExpense() {
     }
 
     function handleSetWeek(e) {
+        //setEndDate(null);
         setStartDate(e);
-        var end_date = new Date(startDate);
+        var end_date = new Date(e);
         var temp = end_date.setDate(new Date().getDate() + 6)
         setEndDate(temp)
     }
 
+    function handleOnClickDateTwo(e) {
+        var end_date = new Date(startDate);
+        var temp = end_date.setDate(new Date().getDate() + 6)
+        setEndDate(temp)
+    }
     function showExpense(category_id, responseJson) {
         var sum = 0;
         var expList = [];
@@ -199,10 +206,11 @@ export default function WeeklyExpense() {
                     <label htmlFor="datepicker">Select Week</label>
                     <DatePicker
                         selected={startDate}
-                        onChange={handleSetWeek}
+                        onChange={(date) => setStartDate(date)}
                         selectsStart
                         startDate={startDate}
                         id="datepicker"
+                        
                     />
                     <DatePicker
                         selected={endDate}
@@ -210,6 +218,7 @@ export default function WeeklyExpense() {
                         selectsEnd
                         startDate={endDate}
                         minDate={startDate}
+                       
                     />
                 </div>
 

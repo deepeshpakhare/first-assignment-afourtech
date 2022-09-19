@@ -161,7 +161,16 @@ export default function (props) {
             </select>*/}
 
         <div className="col mt-1"><label htmlFor="datepicker">Select Month</label>
-          <ReactDatePicker id="datepicker" showMonthYearPicker onChange={handleChangeMonth} dateFormat={"MM/yyyy"} selected={startDate} ></ReactDatePicker>
+          <ReactDatePicker
+           
+            placeholderText="Click to select month"
+            id="datepicker"
+            showMonthYearPicker
+            onChange={handleChangeMonth}
+            dateFormat={"MM/yyyy"}
+            selected={startDate} >
+
+          </ReactDatePicker>
         </div>
         <div className="col mt-4">
           <button id="addExpense" type="button" class="btn btn-success" style={{ height: 40, width: 230 }} onClick={handleGetExpenses}>Show Monthly Expense</button>
@@ -191,7 +200,7 @@ export default function (props) {
         </tbody>
         <tfoot>
           <tr>
-            <td  className='text-end pe-5'colspan="2">
+            <td className='text-end pe-5' colspan="2">
               <span className="badge text-bg-warning">
                 <h3>Total Rs: &nbsp;{expense}</h3>
               </span>
