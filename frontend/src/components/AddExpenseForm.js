@@ -85,8 +85,9 @@ export default function AddExpenseForm(props) {
     }
     function handleChangeExpense(e) {
         var val = parseInt(e.target.value);
-        if (val == NaN) {
-            alert("Please enter a valid amount");
+        if (isNaN(val) || (val == " ")) {
+            alert("Please enter a number");
+            document.getElementById("expenseAmount").value = "";
         } else {
             setExpense(parseInt(e.target.value));
         }
@@ -212,58 +213,68 @@ export default function AddExpenseForm(props) {
         return count;
     }
 
+    function isEnteredExpenseValueValid(expenseVal) {
+        if (expenseVal == "") {
+            return false;
+        }
+        return true;
+    }
     async function handleAddExpense(e) {
         //alert("Expense Added")
+        if (isEnteredExpenseValueValid(expense)) {
+            try {
+                budget = await getBudget()
+                console.log("budget is " + budget.amount);
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Cookie", "connect.sid=s%3A68ad74f3-1a26-43ba-8bb1-449d70f49133.PTNrJWHaTgOOyT%2BE6CM5NLVbN6sipYgpJ6WYx7RrdTg");
 
-        try {
-            budget = await getBudget()
-            console.log("budget is " + budget.amount);
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            myHeaders.append("Cookie", "connect.sid=s%3A68ad74f3-1a26-43ba-8bb1-449d70f49133.PTNrJWHaTgOOyT%2BE6CM5NLVbN6sipYgpJ6WYx7RrdTg");
+                var raw = JSON.stringify({
+                    "session_id": sessionInfo._id,
+                    "category_id": categoryId,
+                    "amount": expense,
+                    "date_of_expense": date,
+                });
 
-            var raw = JSON.stringify({
-                "session_id": sessionInfo._id,
-                "category_id": categoryId,
-                "amount": expense,
-                "date_of_expense": date,
-            });
+                var requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                };
 
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
+                fetch("http://localhost:8080/addExpense", requestOptions)
+                    .then(response => response.json())
+                    .then((result) => {
+                        console.log(result);
+                        alert("Expense has been successfully added");
+                        document.getElementById("expenseAmount").value = "";
+                    })
+                    .catch(error => console.log('error', error));
 
-            fetch("http://localhost:8080/addExpense", requestOptions)
-                .then(response => response.json())
-                .then((result) => {
-                    console.log(result);
-                    alert("Expense has been successfully added");
-                    document.getElementById("expenseAmount").value = "";
-                })
-                .catch(error => console.log('error', error));
+                //getexpenses called
+                await getExpenses();
+                console.log("total expense is" + totalExpenseSum)
+                if ((totalExpenseSum > budget.amount) || (expense > budget.amount)) {
 
-            //getexpenses called
-            await getExpenses();
-            console.log("total expense is" + totalExpenseSum)
-            if ((totalExpenseSum >= budget.amount) || (expense >= budget.amount)) {
+                    alert("Your total expense have exceeded budget");
+                    createNotification();
+                    var notifications = await getAllNotifications();
+                    var notificationCount = getNotificationCount(notifications);
+                    console.log("notification count is " + notificationCount);
+                    window.location.reload();
+                    //notificationCount = notificationCount + 1;
+                    console.log("notification count is " + notificationCount)
+                    window.localStorage.setItem("notificationCount", notificationCount);
+                }
 
-                alert("Your total expense have exceeded budget");
-                createNotification();
-                var notifications = await getAllNotifications();
-                var notificationCount = getNotificationCount(notifications);
-                console.log("notification count is " + notificationCount);
-                window.location.reload();
-                //notificationCount = notificationCount + 1;
-                console.log("notification count is " + notificationCount)
-                window.localStorage.setItem("notificationCount", notificationCount);
+            } catch (ex) {
+                alert("Please set the monthly budget first");
             }
-
-        } catch (ex) {
-            alert("Please set the monthly budget first");
+        }else{
+            alert("The entered value is not a valid amount");
         }
+
     }
 
     return (

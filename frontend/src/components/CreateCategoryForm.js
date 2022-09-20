@@ -13,7 +13,8 @@ export default function CreateCategoryForm() {
 
     function handleChangeCategory(e) {
         if (e.target.value != null) {
-            setCategory(e.target.value);
+            var temp = (e.target.value).toLowerCase();
+            setCategory(temp);
             serialNumberArray.push(count++);
         }
     }
